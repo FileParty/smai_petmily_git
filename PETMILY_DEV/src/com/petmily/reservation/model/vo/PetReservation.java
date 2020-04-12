@@ -2,9 +2,9 @@ package com.petmily.reservation.model.vo;
 
 public class PetReservation {
 
-	private String reservationCode;
-	private int petCode;
+	private int reservationCode;
 	private String petSitterId;
+	private String userId;
 	private int boardNo;
 	private String checkIn;
 	private String checkOut;
@@ -20,13 +20,13 @@ public class PetReservation {
 	public PetReservation() {
 		// TODO Auto-generated constructor stub
 	}
-	public PetReservation(String reservationCode, int petCode, String petSitterId, int boardNo, String checkIn,
+	public PetReservation(int reservationCode, String petSitterId, String userId, int boardNo, String checkIn,
 			String checkOut, String careType, String petType, int petBath, String petMedication, String petPickup,
 			String plusQuestion, String priceEndDate, int price, String resType) {
 		super();
 		this.reservationCode = reservationCode;
-		this.petCode = petCode;
 		this.petSitterId = petSitterId;
+		this.userId = userId;
 		this.boardNo = boardNo;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -40,23 +40,23 @@ public class PetReservation {
 		this.price = price;
 		this.resType = resType;
 	}
-	public String getReservationCode() {
+	public int getReservationCode() {
 		return reservationCode;
 	}
-	public void setReservationCode(String reservationCode) {
+	public void setReservationCode(int reservationCode) {
 		this.reservationCode = reservationCode;
-	}
-	public int getPetCode() {
-		return petCode;
-	}
-	public void setPetCode(int petCode) {
-		this.petCode = petCode;
 	}
 	public String getPetSitterId() {
 		return petSitterId;
 	}
 	public void setPetSitterId(String petSitterId) {
 		this.petSitterId = petSitterId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public int getBoardNo() {
 		return boardNo;
@@ -132,11 +132,23 @@ public class PetReservation {
 	}
 	@Override
 	public String toString() {
-		return "PetReservation [reservationCode=" + reservationCode + ", petCode=" + petCode + ", petSitterId="
-				+ petSitterId + ", boardNo=" + boardNo + ", checkIn=" + checkIn + ", checkOut=" + checkOut
-				+ ", careType=" + careType + ", petType=" + petType + ", petBath=" + petBath + ", petMedication="
-				+ petMedication + ", petPickup=" + petPickup + ", plusQuestion=" + plusQuestion + ", priceEndDate="
-				+ priceEndDate + ", price=" + price + ", resType=" + resType + "]";
+		return "PetReservation [reservationCode=" + reservationCode + ", petSitterId=" + petSitterId + ", userId="
+				+ userId + ", boardNo=" + boardNo + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", careType="
+				+ careType + ", petType=" + petType + ", petBath=" + petBath + ", petMedication=" + petMedication
+				+ ", petPickup=" + petPickup + ", plusQuestion=" + plusQuestion + ", priceEndDate=" + priceEndDate
+				+ ", price=" + price + ", resType=" + resType + "]";
 	}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+
+	
 	
 }
