@@ -10,7 +10,6 @@ public class AdminPetsitter {
 	private String userType;
 	// 자격증 정보
 	private int cerCount;
-
 	private String CERTIFICATE_NAME;
 	private String CERTIFICATION_NAME;
 	private String DATE_OF_ACQUISITION;

@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.petmily.admin.model.vo.ApplyUserData,com.petmily.admin.model.vo.User" %>
+<%@ page import="com.petmily.admin.model.vo.ApplyUserData,com.petmily.admin.model.vo.User,com.petmily.admin.model.vo.AdminPetsitter" %>
 <% 
 	ApplyUserData aud = null;
 	User u = null;
+	AdminPetsitter ap = null;
 	if(request.getAttribute("showType")!=null&&request.getAttribute("userData")!=null&&((String)request.getAttribute("showType")).equals("apply")){
 		aud = (ApplyUserData)request.getAttribute("userData");
 	} else if(request.getAttribute("showType")!=null&&request.getAttribute("userData")!=null&&((String)request.getAttribute("showType")).equals("user")){
 		u = (User)request.getAttribute("userData");
+	} else if(request.getAttribute("showType")!=null&&request.getAttribute("userData")!=null&&((String)request.getAttribute("showType")).equals("petsitter")){
+		ap = (AdminPetsitter)request.getAttribute("userData");
 	}
 
 %>

@@ -360,9 +360,10 @@ public class AdminDao {
 				u.setUserId(rs.getString("USER_ID"));
 				u.setUserName(rs.getString("USER_NAME"));
 				u.setEnrollDate(rs.getString("ENROLL_DATE"));
+				u.setUserType(rs.getString("TYPE"));
 				u.setStar(rs.getDouble("STAR"));
 				if(rs.getString("CERTIFICATE_NAME")!=null) {
-					
+					u.setCerCount(1);
 				}
 				list.add(u);
 			}
@@ -373,6 +374,25 @@ public class AdminDao {
 		
 		
 		return list;
+	}
+
+	public int petsitterCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = prop.getProperty("petsitterCount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			count = Integer.parseInt(rs.getString(1));
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return count;
 	}
 	
 

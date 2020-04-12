@@ -106,4 +106,11 @@ public class AdminService {
 		return list;
 	}
 
+	public int petsitterCount() {
+		Connection conn = getConnection();
+		int count = dao.petsitterCount(conn);
+		close(conn);
+		return count;
+	}
+
 }
