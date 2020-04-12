@@ -358,7 +358,7 @@ public class UserDao {
 	}
 	
 //	마이페이지 - 북마크 로직
-	public List<UserBookMarkBoard> userBookMarkBoard(Connection conn, String id) {
+	public List<UserBookMarkBoard> userBookMarkBoard(Connection conn, String id, int cPage, int numPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		UserBookMarkBoard ubm = null;
@@ -366,7 +366,10 @@ public class UserDao {
 		String sql = prop.getProperty("userBookMarkBoard");
 		try {
 			pstmt = conn.prepareStatement(sql);
+//			페이징 처리시, SQL문도 수정이 필요하다.
+//			RNUM 처리를 위해 서브쿼리 수정이 필요하다.
 			pstmt.setString(1, id);
+			
 			System.out.println("dao의 id :"+id);
 			rs = pstmt.executeQuery();
 			
@@ -392,5 +395,9 @@ public class UserDao {
 		return list;
 	}
 	
-	
+//	북마크 목록 페이징 처리 로직
+	public int selectBoardCount(Connection conn) {
+		
+		
+	}
 }

@@ -131,14 +131,20 @@ public class UserService {
 	
 	
 //	북마크 로직
-	public List<UserBookMarkBoard> userBookMarkList(String id) {
+	public List<UserBookMarkBoard> userBookMarkList(String id, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		List<UserBookMarkBoard> list = dao.userBookMarkBoard(conn, id);
+		List<UserBookMarkBoard> list = dao.userBookMarkBoard(conn, id, cPage, numPerPage);
 		close(conn);
 		return list;
 	}
 	
-	
+//	북마크 목록 페이징 처리 로직
+	public int selectBoardCount() {
+		Connection conn = getConnection();
+		int count = dao.selectBoardCount(conn);
+		close(conn);
+		return count;
+	}
 	
 	
 	
