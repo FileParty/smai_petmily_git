@@ -36,14 +36,16 @@ public class SitterDetailServlet extends HttpServlet {
     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
     */
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      String userId="petsitter2";
+      String userId="petsitter4";
       
+      System.out.println("서블릿 들어옴");
       PetSitterBoard pb = new BoardService().boardDetail(userId);
-    
+      System.out.println("서블릿 : "  +pb);
      
            
       request.setAttribute("board", pb);
       request.getRequestDispatcher("/views/board/boardDetail.jsp").forward(request, response);
+      
       
       
       

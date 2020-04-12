@@ -106,7 +106,7 @@ public class SitterWriterServlet extends HttpServlet {
 		
 	
 		
-	PetSitterBoard pb = new PetSitterBoard(0,"petsitter2",title,intro,small,middle,big,address,comment,"N","Y",small1,middle1,big1,oneWay,allWay,sale,list,defaultO,plusO);
+	PetSitterBoard pb = new PetSitterBoard(0,"petsitter4",title,intro,small,middle,big,address,comment,"N","Y",small1,middle1,big1,oneWay,allWay,sale,list,defaultO,plusO);
 	
 		
 		int result = new BoardService().boardInsert(pb);

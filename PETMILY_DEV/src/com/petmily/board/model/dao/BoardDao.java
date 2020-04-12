@@ -121,21 +121,17 @@ public int boardImg(Connection conn,PetSitterBoard pb ,String img) {
       return result;
 }
 
-public  int plusOptionInsert(Connection conn,String plus,PetSitterBoard pb,int boardNo) {
+public  int addSale(Connection conn,String plus,PetSitterBoard pb,int boardNo) {
    PreparedStatement pstmt = null;
    int result = 0;
-   String sql = prop.getProperty("plusOptionInsert");
+   String sql = prop.getProperty("addSale");
+  
    try {
       pstmt=conn.prepareStatement(sql);
       
       pstmt.setInt(1,boardNo);
       pstmt.setString(2, plus);
-      pstmt.setInt(3, pb.getSmallPrice1());
-      pstmt.setInt(4, pb.getMiddlePrice1());
-      pstmt.setInt(5, pb.getBigPrice1());
-      pstmt.setInt(6, pb.getOneWayPrice());
-      pstmt.setInt(7, pb.getAllWayPrice());
-      pstmt.setInt(8,pb.getSalePrice());
+      pstmt.setInt(3,pb.getSalePrice());
       result = pstmt.executeUpdate();
    }catch(SQLException e) {
       e.printStackTrace();
@@ -144,6 +140,91 @@ public  int plusOptionInsert(Connection conn,String plus,PetSitterBoard pb,int b
    }
    return result;
 }
+
+public  int oldCare(Connection conn,String plus,PetSitterBoard pb,int boardNo) {
+	   PreparedStatement pstmt = null;
+	   int result = 0;
+	   String sql =prop.getProperty("oldCare");
+	   
+	   try {
+	      pstmt=conn.prepareStatement(sql);
+	      
+	      pstmt.setInt(1,boardNo);
+	      pstmt.setString(2, plus);
+	   	  result = pstmt.executeUpdate();
+	   	      
+	   }catch(SQLException e) {
+	      e.printStackTrace();
+	   }finally {
+	      close(pstmt);
+	   }
+	   return result;
+	}
+
+public  int showerOn(Connection conn,String plus,PetSitterBoard pb,int boardNo) {
+	   PreparedStatement pstmt = null;
+	   int result = 0;
+	   String sql = prop.getProperty("showerOn");
+	  
+	   try {
+	      pstmt=conn.prepareStatement(sql);
+	      
+	      pstmt.setInt(1,boardNo);
+	      pstmt.setString(2, plus);
+	      pstmt.setInt(3, pb.getSmallPrice1());
+	      pstmt.setInt(4, pb.getMiddlePrice1());
+	      pstmt.setInt(5, pb.getBigPrice1());
+	     
+	      result = pstmt.executeUpdate();
+	   }catch(SQLException e) {
+	      e.printStackTrace();
+	   }finally {
+	      close(pstmt);
+	   }
+	   return result;
+	}
+
+public  int drug(Connection conn,String plus,PetSitterBoard pb,int boardNo) {
+	   PreparedStatement pstmt = null;
+	   int result = 0;
+	   String sql = prop.getProperty("drug");
+	  
+	   try {
+	      pstmt=conn.prepareStatement(sql);
+	      
+	      pstmt.setInt(1,boardNo);
+	      pstmt.setString(2, plus);
+	   
+	      result = pstmt.executeUpdate();
+	   }catch(SQLException e) {
+	      e.printStackTrace();
+	   }finally {
+	      close(pstmt);
+	   }
+	   return result;
+	}
+
+public  int pickUp(Connection conn,String plus,PetSitterBoard pb,int boardNo) {
+	   PreparedStatement pstmt = null;
+	   int result = 0;
+	   String sql = prop.getProperty("pickUp");
+	  
+	   try {
+	      pstmt=conn.prepareStatement(sql);
+	      
+	      pstmt.setInt(1,boardNo);
+	      pstmt.setString(2, plus);
+	      pstmt.setInt(3, pb.getOneWayPrice());
+	      pstmt.setInt(4, pb.getAllWayPrice());
+	     
+	      result = pstmt.executeUpdate();
+	   }catch(SQLException e) {
+	      e.printStackTrace();
+	   }finally {
+	      close(pstmt);
+	   }
+	   return result;
+	}
 
 public int defaultOption(Connection conn,String defaults,PetSitterBoard  pb,int boardNo) {
    PreparedStatement pstmt = null;
@@ -163,7 +244,7 @@ public int defaultOption(Connection conn,String defaults,PetSitterBoard  pb,int 
 }
 
 public PetSitterBoard boardDetail(Connection conn,String userId) {
-   System.out.println(userId);
+   System.out.println("보드 상세 들왔음");
    PreparedStatement pstmt = null;
    ResultSet rs = null;
    PetSitterBoard pb = null;
@@ -215,13 +296,12 @@ public PetSitterBoard imgDetail(Connection conn, PetSitterBoard pb) {
            
             pb.setBoardNo(rs.getInt("BOARD_CODE"));
             list.add(rs.getString("IMG_FILENAME"));
-            System.out.println(list);
+            pb.setBoardImages(list);
+           
          }
-         pb.setBoardImages(list);
          
-         System.out.println("list:"+list);
-         System.out.println("이미지:"+pb.getBoardImages());
-         System.out.println("이미지:"+(pb.getBoardImages()) instanceof String);
+         
+        
          
             
       }catch(SQLException e) {
@@ -247,13 +327,11 @@ public PetSitterBoard defaultOptionDetail(Connection conn, PetSitterBoard pb) {
          rs = pstmt.executeQuery();
          
          while(rs.next()) {
-            
             pb.setBoardNo(rs.getInt("BOARD_CODE"));
             list.add(rs.getString("DEFAULT_SERVICE_VALUES"));
-            
          }
          pb.setServiceTypes(list);
-         System.out.println("list2:"+list);
+       
             
       }catch(SQLException e) {
          e.printStackTrace();
@@ -271,10 +349,12 @@ public PetSitterBoard plusOptionDetail(Connection conn, PetSitterBoard pb) {
       
       String sql = prop.getProperty("plusOptionDetail");
       List<String> list = new ArrayList<String>();
+ 
       
       try { 
          pstmt=conn.prepareStatement(sql);
          pstmt.setInt(1,pb.getBoardNo());
+         
          rs = pstmt.executeQuery();
          
          while(rs.next()) {
@@ -282,17 +362,21 @@ public PetSitterBoard plusOptionDetail(Connection conn, PetSitterBoard pb) {
             
             pb.setBoardNo(rs.getInt("BOARD_CODE"));
             list.add(rs.getString("PLUS_SERVICE_VALUES"));
+            pb.setPlus(list);
+            	
+            if(rs.getString("PLUS_SERVICE_VALUES").contains("목욕가능")==true) {
             pb.setSmallPrice1(rs.getInt("PLUS_SERVICE_SMALL_PRICE"));
             pb.setMiddlePrice1(rs.getInt("PLUS_SERVICE_MEDIUM_PRICE"));
             pb.setBigPrice1(rs.getInt("PLUS_SERVICE_BIG_PRICE"));
+            }else if(rs.getString("PLUS_SERVICE_VALUES").contains("집앞픽업")==true) {
             pb.setOneWayPrice(rs.getInt("PLUS_SERVICE_ONE_WAY_PRICE"));
             pb.setAllWayPrice(rs.getInt("PLUS_SERVCIE_ROUND_TRIP_PRICE"));
+            }else if(rs.getString("PLUS_SERVICE_VALUES").contains("추가할인")==true) {
             pb.setSalePrice(rs.getInt("PLUS_SERVICE_SAIL_PRICE"));
-           
-            
+            }
          }
-         pb.setPlus(list);
-         System.out.println("list3:"+list);
+         System.out.println("dao 보드상세 :" +pb);
+         	
             
       }catch(SQLException e) {
          e.printStackTrace();
