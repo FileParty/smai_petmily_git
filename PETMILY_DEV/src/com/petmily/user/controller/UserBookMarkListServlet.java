@@ -42,7 +42,9 @@ public class UserBookMarkListServlet extends HttpServlet {
 			
 //			DB에서 id와 동일한 정보를 가져온다
 			List<UserBookMarkBoard> list = new UserService().userBookMarkList(id);
-			System.out.println("회원이 북마크한 리스트. dao에서 북마크 list값을 잘 가져왔는가? : "+list);
+			for(UserBookMarkBoard l : list) {
+				System.out.println("회원이 북마크한 리스트. dao에서 북마크 list값을 잘 가져왔는가? : "+l);				
+			}
 			
 //			가져온 내용을 저장하고 아이디값과 함께 매핑값을 보낸다.
 			request.setAttribute("list", list);

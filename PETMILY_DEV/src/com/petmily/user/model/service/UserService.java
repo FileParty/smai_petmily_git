@@ -46,7 +46,7 @@ public class UserService {
 	    }
 	
 	
-//	濡쒓렇�씤 泥섎━ 湲곕뒫
+//	로그인 로직
 	public User userSelect(String user_id, String password) {
 		Connection conn = getConnection();
 		User user = dao.userSelect(conn, user_id, password);
@@ -54,7 +54,7 @@ public class UserService {
 		return user;
 	}
 	
-//	�쉶�썝媛��엯 以�, [�븘�씠�뵒 以묐났�솗�씤] 泥댄겕�븯湲�
+//	아이디 중복확인 로직
 	public boolean userIdDuplicate(String userId) {
 		Connection conn = getConnection();
 		boolean flag = dao.userIdDuplicate(conn, userId);
@@ -62,7 +62,7 @@ public class UserService {
 		return flag;
 	}
 	
-//	�쉶�썝媛��엯 以�, [�쑕��踰덊샇 以묐났�솗�씤] 泥댄겕�븯湲�
+//	휴대폰 중복확인 로직
 	public boolean phoneDuplicate(String phone) {
 		Connection conn = getConnection();
 		boolean flag = dao.phoneDuplicate(conn, phone);
@@ -70,7 +70,7 @@ public class UserService {
 		return flag;
 	}
 	
-//	�쉶�썝媛��엯 以�, [�씠硫붿씪 以묐났�솗�씤] 泥댄겕�븯湲�
+//	이메일 중복확인 로직
 	public boolean emailDuplicate(String email) {
 		Connection conn = getConnection();
 		boolean flag = dao.emailDuplicate(conn, email);
@@ -78,7 +78,7 @@ public class UserService {
 		return flag;
 	}
 	
-//	�쉶�썝媛��엯 濡쒖쭅
+//	회원가입 로직
 	public int userJoin(User u) {
 		Connection conn = getConnection();
 		int result = dao.userJoin(conn, u);
@@ -90,7 +90,7 @@ public class UserService {
 	
 //	------------------------------------------------
 	
-//	�궡�젙蹂대낫湲� �솕硫댁쟾�솚(留덉씠�럹�씠吏�) 濡쒖쭅
+//	마이페이지 이동 로직
 	public User userSelect(String id) {
 		Connection conn = getConnection();
 		User u = dao.userSelect(conn, id);
@@ -98,7 +98,7 @@ public class UserService {
 		return u;
 	}
 	
-//	�쉶�썝 �젙蹂� �닔�젙 濡쒖쭅
+//	회원정보 수정 로직
 	public int userUpdate(String id, String newPw, String email, String phone, String postNum, String address, String detailAddress) {
 		Connection conn = getConnection();
 		int result = dao.userUpdate(conn, id, newPw, email, phone, postNum, address, detailAddress);
@@ -114,7 +114,7 @@ public class UserService {
 	}
 	
 	
-//	�쉶�썝�깉�눜 濡쒖쭅
+//	회원정보 삭제 로직
 	public int userDelete(String id) {
 		Connection conn = getConnection();
 		int result = dao.userDelete(conn, id);
@@ -130,7 +130,7 @@ public class UserService {
 	}
 	
 	
-//	遺곷쭏�겕 濡쒖쭅
+//	북마크 로직
 	public List<UserBookMarkBoard> userBookMarkList(String id) {
 		Connection conn = getConnection();
 		List<UserBookMarkBoard> list = dao.userBookMarkBoard(conn, id);

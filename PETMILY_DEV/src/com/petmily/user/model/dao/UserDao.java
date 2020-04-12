@@ -274,12 +274,12 @@ public class UserDao {
 
 //	-----------------------------------------------------------
 	
-//	�엫�쓽濡� 留뚮뱺 �궡 �젙蹂대낫湲곕�� �닃���쓣 �븣, 癒쇱� 肉뚮젮�졇�빞 �븯�뒗 �젙蹂대�� 媛��졇�삤�뒗 濡쒖쭅
+//	회원정보 보기 로직
 	public User userSelect(Connection conn, String id) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		User u = null;
-		String sql = prop.getProperty("duplicate"); // id瑜� 李얜뒗 媛숈� SQL臾�
+		String sql = prop.getProperty("duplicate");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -313,13 +313,12 @@ public class UserDao {
 	}
 	
 	
-//	�쉶�썝�젙蹂� �닔�젙 濡쒖쭅
+//	회원정보 수정 로직
 	public int userUpdate(Connection conn, String id, String newPw, String email, String phone, String postNum, String address, String detailAddress) {
 		PreparedStatement pstmt = null;
 		int result= 0;
 		String sql = prop.getProperty("userUpdate");
-		try {
-//			諛붽� �젙蹂� : �깉 鍮꾨�踰덊샇, �씠硫붿씪, �쑕��踰덊샇, �슦�렪踰덊샇, �룄濡쒕챸二쇱냼, �긽�꽭二쇱냼
+		try { 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, newPw);
 			pstmt.setString(2, email); 
@@ -339,7 +338,7 @@ public class UserDao {
 		return result;
 	}
 	
-//	�쉶�썝�깉�눜 濡쒖쭅
+//	회원탈퇴 로직
 	public int userDelete(Connection conn, String id) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -358,7 +357,7 @@ public class UserDao {
 		return result;
 	}
 	
-//	遺곷쭏�겕 濡쒖쭅 (�뀒�씠釉� �궡�슜�쓣 媛��졇�삩�떎 - UserBookMarkBoard vo 媛앹껜)
+//	마이페이지 - 북마크 로직
 	public List<UserBookMarkBoard> userBookMarkBoard(Connection conn, String id) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -392,5 +391,6 @@ public class UserDao {
 		}
 		return list;
 	}
+	
 	
 }

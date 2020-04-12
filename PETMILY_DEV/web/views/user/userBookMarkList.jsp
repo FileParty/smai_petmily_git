@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import="java.util.List,com.petmily.user.model.vo.UserBookMark,com.petmily.user.model.vo.User" %>
+<%@ page import="java.util.List,com.petmily.user.model.vo.UserBookMarkBoard,com.petmily.user.model.vo.User" %>
 <%
-	List<UserBookMark> list = (List)request.getAttribute("list");
-	User loginUser = null;
+	List<UserBookMarkBoard> list = (List)request.getAttribute("list");
+	for(UserBookMarkBoard ubmb : list) {
+		System.out.println("화면에 갖고오나?"+ubmb);
+	}
 %>    
     
 <%@ include file="/views/common/header.jsp" %>
+
 <style>
    *{   
         box-sizing: border-box;
@@ -170,7 +173,7 @@
                         <th>게시글 링크</th>
                     </tr>
                     
-                    <% for(UserBookMark ubm : list) { %>
+                    <%-- <% for(UserBookMark ubm : list) { %>
 	                    <tr>
 	                    	<!-- no -->
 							<td><%= ubm %></td>
@@ -183,7 +186,7 @@
 							<!-- 게시글 링크 -->
 							<td><%=  %></td> 
 	                    </tr>
-	                 <% } %>
+	                 <% } %> --%>
     
                     
                 </table>
