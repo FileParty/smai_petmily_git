@@ -1,12 +1,15 @@
 package com.petmily.admin.service;
 
 import static com.petmily.admin.common.JDBCTemplate.close;
+import static com.petmily.admin.common.JDBCTemplate.commit;
 import static com.petmily.admin.common.JDBCTemplate.getConnection;
+import static com.petmily.admin.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.petmily.admin.model.dao.AdminDao;
+import com.petmily.admin.model.vo.AdminPetsitter;
 import com.petmily.admin.model.vo.AdminUser;
 import com.petmily.admin.model.vo.ApplyUser;
 import com.petmily.admin.model.vo.ApplyUserData;
@@ -61,6 +64,53 @@ public class AdminService {
 		User u = dao.userData(conn, userId);
 		close(conn);
 		return u;
+	}
+
+	public int applyUpdate(String type, String userId) {
+		Connection conn = getConnection();
+		int result = dao.applyUpdate(conn, type, userId);
+		if(result>0) {
+			result = dao.applyCheck(conn, userId);
+			// check에서 자격증 있는지 없는지 조회 후 user_pet_sitter테이블 업데이트
+			result = dao.applyUpdateEnd(conn, type, userId, result);
+			if(result>0) {
+				commit(conn);
+			} else {
+				rollback(conn);
+			}
+			
+		} else {
+			rollback(conn);
+		}
+		return result;
+	}
+
+	public ArrayList<ApplyUser> cancelList(int cPage, int numPerPage, String type) {
+		Connection conn = getConnection();
+		ArrayList<ApplyUser> list = dao.cancelList(conn, cPage, numPerPage, type);
+		close(conn);
+		return list;
+	}
+
+	public int cancelCount() {
+		Connection conn = getConnection();
+		int count = dao.cancelCount(conn);
+		close(conn);
+		return count;
+	}
+
+	public ArrayList<AdminPetsitter> petsitterList(int cPage, int numPerPage, String type) {
+		Connection conn = getConnection();
+		ArrayList<AdminPetsitter> list = dao.petsitterList(conn, cPage, numPerPage, type);
+		close(conn);
+		return list;
+	}
+
+	public int petsitterCount() {
+		Connection conn = getConnection();
+		int count = dao.petsitterCount(conn);
+		close(conn);
+		return count;
 	}
 
 }

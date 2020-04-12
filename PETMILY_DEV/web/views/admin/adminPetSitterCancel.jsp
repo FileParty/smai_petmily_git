@@ -45,9 +45,6 @@
 						<th>No</th>
 						<th>아이디</th>
 						<th>이름</th>
-						<th>지원폼확인</th>
-						<th>상태</th>
-						<th>메일 회신</th>
 						<th>지원 일자</th>
 					</tr>
 				</thead>
@@ -57,15 +54,6 @@
 							<td><%=AuCount++%></td>
 							<td><%=au.getUserid()%></td>
 							<td><%=au.getName()%></td>
-							<td><button class="Abtns" onclick="applyUserData()">보기</button></td>
-							<td>
-								<select class="Asele" name="selectType">
-									<option value="상태">상태</option>
-									<option value="반려">반려</option>
-									<option value="허가">허가</option>
-								</select>
-							</td>
-							<td><button type="button" class="Abtns" onclick="emailPush()">회신</button></td>
 							<td><%=au.getEnrollDate().substring(0,11)%></td>
 						</tr>
 					<% } %>
@@ -81,34 +69,13 @@
 	$(function(){
 		// 일자순 이벤트
 		$("#type-date").click(function(){
-				location.replace('<%=request.getContextPath()%>/admin/apply?type=ENROLL_DATE');
+				location.replace('<%=request.getContextPath()%>/admin/cancel?type=ENROLL_DATE');
 		})
 		// 이름순 이벤트
 		$("#type-name").click(function(){
-			location.replace('<%=request.getContextPath()%>/admin/apply?type=USER_NAME');
+			location.replace('<%=request.getContextPath()%>/admin/cancel?type=USER_NAME');
 		})
 		
-		
 	})
-	
-	function applyUserData(){
-			let userId = $(event.target).parent().parent().find("td:nth-of-type(3)").text();
-			window.open("<%=request.getContextPath()%>/admin/applyUserData?userId="+userId,"_blank","width=725px; height=500px");
-		}
-	
-	function emailPush(){
-		let seIndex = $(event.target.parentElement.parentElement.children[4].children).val();
-		let userId = $(event.target.parentElement.parentElement.children[1]).text();
-		let userName = $(event.target.parentElement.parentElement.children[2]).text();
-		console.log(userId);
-		console.log(userName);
-		console.log(seIndex);
-		console.log('<%=request.getContextPath()%>/admin/email?type='+seIndex+"&userId="+userId+"&userName="+userName);
-		if(seIndex=='상태'){
-			alert("회신할 상태를 선택해주세요!");
-			return;
-		}
-		location.replace('<%=request.getContextPath()%>/admin/email?type='+seIndex+"&userId="+userId+"&userName="+userName);
-	}
 </script>
 <%@ include file="/views/common/footer.jsp" %>

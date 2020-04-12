@@ -2,13 +2,11 @@ package com.petmily.admin.controller;
 
 import java.io.IOException;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.xml.internal.fastinfoset.sax.Properties;
+import com.petmily.admin.service.AdminService;
 
 /**
  * Servlet implementation class AdminEmailServlet
@@ -50,6 +48,8 @@ public class AdminEmailServlet extends HttpServlet {
 		String user = "wadsij@naver.com";
 		String password = "kim1q2w3e";
 		
+		int result = 0;
+		
 		// SMTP서버 정보 설정
 		java.util.Properties props = new java.util.Properties(); 
 		props.put("mail.smtp.host", host); 
@@ -64,7 +64,7 @@ public class AdminEmailServlet extends HttpServlet {
 		content += "<h1 style='text-align:center; font-size:55px;'>펫 밀리에서 알려드립니다!</h1>";
 		content += "<hr/>";
 		content += "<br/>";
-		content += "<div style='border:1px solid black; background-color:lightgreen;'>";
+		content += "<div style='background-color:lightgreen;'>";
 		if(type.equals("반려")) {
 			content += "<p style='text-align:center; font-size:28px; background-color:lightgray;'>" + userName + "님은 반려되셨습니다.</p>";
 			content += "<p style='text-align:center; font-size:17px; background-color:lightgreen;'>자세한 사항은 관리자에게 문의해주세요</p>";
@@ -75,9 +75,9 @@ public class AdminEmailServlet extends HttpServlet {
 		content += "</div>";
 		content += "</div>";
 		try { 
-			MimeMessage msg = new MimeMessage(session); 
+			MimeMessage msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(user)); 
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress("pdg300@naver.com")); 
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress("sungyon0@naver.com"));
 			// 메일 제목 
 			msg.setSubject("PETMILY 펫시터 지원 답변이메일입니다."); 
 			// 메일 전송 및 html로 셋팅
@@ -85,9 +85,23 @@ public class AdminEmailServlet extends HttpServlet {
 			// send the message 
 			Transport.send(msg);
 			
+			result = new AdminService().applyUpdate(type, userId);
+			
 		} catch (MessagingException e) { 
 			e.printStackTrace(); 
 		}
+		
+		if(result>0) {
+			request.setAttribute("msg", "회원 정보 수정에 성공했습니다.");
+			request.setAttribute("loc", "/admin/apply");
+		} else {
+			request.setAttribute("msg", "회원 정보 수정에 실패했습니다.");
+			request.setAttribute("loc", "/admin/apply");
+		}
+		request.getRequestDispatcher("/views/common/msg.jsp")
+		.forward(request, response);
+		
+		
 		
 		
 		
