@@ -56,22 +56,19 @@ div.adminUserInfo th:nth-of-type(1){
 	width:35px;
 }
 div.adminUserInfo th:nth-of-type(2){
-	width:45px;
+	width:130px;
 }
-div.adminUserInfo th:nth-of-type(3){
-	width:120px;
-}
-div.adminUserInfo th:nth-of-type(5){
-	width:170px;
-}
-div.adminUserInfo th:nth-of-type(6){
+div.adminUserInfo th:nth-of-type(4){
 	width:180px;
 }
-div.adminUserInfo th:nth-of-type(7){
-	width:220px;
+div.adminUserInfo th:nth-of-type(5){
+	width:200px;
+}
+div.adminUserInfo th:nth-of-type(6){
+	width:200px;
 }
 div.adminUserInfo th:nth-of-type(7){
-	width:120px;
+	width:140px;
 }
 
 div.adminUserInfo tbody>tr{

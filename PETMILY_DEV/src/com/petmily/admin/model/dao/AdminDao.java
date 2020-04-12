@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.petmily.admin.model.vo.AdminPetsitter;
 import com.petmily.admin.model.vo.AdminUser;
 import com.petmily.admin.model.vo.ApplyUser;
 import com.petmily.admin.model.vo.ApplyUserData;
@@ -234,6 +235,144 @@ public class AdminDao {
 			e.printStackTrace();
 		}
 		return u;
+	}
+
+	public int applyUpdate(Connection conn, String type, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("applyUTUpdate");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			if(type.equals("반려")) {
+				pstmt.setString(1, "거절");
+			} else {
+				pstmt.setString(1, "펫시터");
+			}
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int applyCheck(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("applyCheck");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int applyUpdateEnd(Connection conn, String type, String userId, int result) {
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("applyPTUpdate");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			if(type.equals("반려")) {
+				pstmt.setString(1, "거절");
+			} else {
+				if(result>0) {
+					pstmt.setString(1, "프로펫시터");
+				} else {
+					pstmt.setString(1, "일반펫시터");
+				}
+			}
+			pstmt.setString(2, userId);
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public ArrayList<ApplyUser> cancelList(Connection conn, int cPage, int numPerPage, String type) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<ApplyUser> list = new ArrayList<ApplyUser>();
+		String sql = prop.getProperty("cancelList");
+		sql = sql.replaceAll("ORTYPERO",type);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (cPage-1)*numPerPage+1);
+			pstmt.setInt(2, cPage*numPerPage);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ApplyUser au = new ApplyUser();
+				au.setUserid(rs.getString("USER_ID"));
+				au.setName(rs.getString("USER_NAME"));
+				au.setEnrollDate(rs.getString("ENROLL_DATE"));
+				list.add(au);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+	}
+
+	public int cancelCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = prop.getProperty("cancelCount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			count = Integer.parseInt(rs.getString(1));
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return count;
+	}
+
+	public ArrayList<AdminPetsitter> petsitterList(Connection conn, int cPage, int numPerPage, String type) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<AdminPetsitter> list = new ArrayList<AdminPetsitter>();
+		String sql = prop.getProperty("petsitterList");
+		sql = sql.replaceAll("ORTYPERO",type);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (cPage-1)*numPerPage+1);
+			pstmt.setInt(2, cPage*numPerPage);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				AdminPetsitter u = new AdminPetsitter();
+				u.setUserId(rs.getString("USER_ID"));
+				u.setUserName(rs.getString("USER_NAME"));
+				u.setEnrollDate(rs.getString("ENROLL_DATE"));
+				u.setStar(rs.getDouble("STAR"));
+				if(rs.getString("CERTIFICATE_NAME")!=null) {
+					
+				}
+				list.add(u);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return list;
 	}
 	
 
