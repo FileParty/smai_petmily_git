@@ -112,8 +112,19 @@
         border-right: 1px solid white;
     }
 	button#detailViewBTN {
-		margin-left: 5px;
+	    margin-left: 10px;
+		padding: 7px 15px;
+    	font-size: 12px;
+	    border: 1px solid #ffcc33;
+	    border-radius: 25px;
+	    
+	    color: #ffcc33;
+	    background-color: white;
+	}
+	button#detailViewBTN:hover {
 		cursor: pointer;
+	    background-color: #ffcc33;
+	    color: white;
 	}
 </style>
 
@@ -121,7 +132,7 @@
 <body>
     <section>
         <div class="container">
-            <form action="<%=request.getContextPath()%>/sitter/write?userId=<%=loginUser.getUserId() %>" method="post">
+            <form action="<%=request.getContextPath()%>/sitter/write?userId=<%=loginUser.getUserId() %>" method="post" enctype="multipart/form-data">
             <div class="row">
             <div class="col-2 menu">
                     <div id="menu">
@@ -191,8 +202,8 @@
 							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayMprice() %>원</p></td> <!-- m -->
 							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayBprice() %>원</p></td> <!-- b -->
 							<!-- 게시글 링크 -->
-							<%-- <td><a href="<%=request.getContextPath()%>/boardList.do?userId=<%=loginUser.getUserId()%>&boardCoed=<%=ubmb.getBoardCode()%>">임시버튼</a></td> --%> 
-							<td><button id="detailViewBTN" onclick="location.replace('<%=request.getContextPath()%>/boardList.do?userId=<%=loginUser.getUserId()%>&boardCoed=<%=ubmb.getBoardCode()%>')">상세 내역 보기</button></td> 
+							<td><button id="detailViewBTN" 
+							onclick="location.replace('<%=request.getContextPath()%>/boardList.do?userId=<%=loginUser.getUserId()%>&boardCode=<%=ubmb.getBoardCode()%>')">상세 내역 보기</button></td> 
 	                    </tr>
 	                 <% } %>
     
