@@ -111,14 +111,17 @@
         color: grey;
         border-right: 1px solid white;
     }
-
+	button#detailViewBTN {
+		margin-left: 5px;
+		cursor: pointer;
+	}
 </style>
 
 
 <body>
     <section>
         <div class="container">
-            <form action="<%=request.getContextPath()%>/sitter/write?userId=sebin" method="post" onsubmit="return test();">
+            <form action="<%=request.getContextPath()%>/sitter/write?userId=<%=loginUser.getUserId() %>" method="post">
             <div class="row">
             <div class="col-2 menu">
                     <div id="menu">
@@ -169,24 +172,29 @@
                         <th>no</th>
             			<th>제목</th>
             			<th>펫 시터 이름</th>
-                        <th>일박 케어 요금</th>
+                        <th>일박 케어 요금(소형)</th>
+                        <th>일박 케어 요금(중형)</th>
+                        <th>일박 케어 요금(대형)</th>
                         <th>게시글 링크</th>
                     </tr>
                     
-                    <%-- <% for(UserBookMark ubm : list) { %>
+                     <% for(UserBookMarkBoard ubmb : list) { %>
 	                    <tr>
 	                    	<!-- no -->
-							<td><%= ubm %></td>
+							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getBoardCode() %></p></td>
 							<!-- 제목 -->
-							<td><%=  %></td>
+							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getBoardTitle() %></p></td>
 							<!-- 펫 시터 이름 --> 
-							<td><%=  %></td> 
-							<!-- 일박 케어 요금 -->
-							<td><%=  %></td> 
+							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getUserName() %></p></td> 
+							<!-- 일박 케어 요금 s,m,b-->
+							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedaySprice() %>원</p></td> <!-- s --> 
+							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayMprice() %>원</p></td> <!-- m -->
+							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayBprice() %>원</p></td> <!-- b -->
 							<!-- 게시글 링크 -->
-							<td><%=  %></td> 
+							<%-- <td><a href="<%=request.getContextPath()%>/boardList.do?userId=<%=loginUser.getUserId()%>&boardCoed=<%=ubmb.getBoardCode()%>">임시버튼</a></td> --%> 
+							<td><button id="detailViewBTN" onclick="location.replace('<%=request.getContextPath()%>/boardList.do?userId=<%=loginUser.getUserId()%>&boardCoed=<%=ubmb.getBoardCode()%>')">상세 내역 보기</button></td> 
 	                    </tr>
-	                 <% } %> --%>
+	                 <% } %>
     
                     
                 </table>

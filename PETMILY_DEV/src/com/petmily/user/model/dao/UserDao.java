@@ -361,25 +361,25 @@ public class UserDao {
 	public List<UserBookMarkBoard> userBookMarkBoard(Connection conn, String id) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		UserBookMarkBoard ubm = null;
 		List<UserBookMarkBoard> list = new ArrayList();
 		String sql = prop.getProperty("userBookMarkBoard");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
+			System.out.println("dao의 id :"+id);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				UserBookMarkBoard ubm = new UserBookMarkBoard();
-				ubm.setBoardCode(rs.getInt("BOARD_CODE"));
-				ubm.setUserId(rs.getString("USER_ID"));
+				ubm = new UserBookMarkBoard();
+				ubm.setBoardCode(rs.getInt("CODE"));
+				ubm.setUserId(rs.getString("ID"));
 				ubm.setBoardTitle(rs.getString("BOARD_TITLE"));
-				ubm.setBoardInfo(rs.getString("BOARD_INFO"));
-				ubm.setOnedaySprice(rs.getInt("ONE_DAY_CARE_S_PRICE"));
-				ubm.setOnedayMprice(rs.getInt("ONE_DAY_CARE_M_PRICE"));
-				ubm.setOnedayBprice(rs.getInt("ONE_DAY_CARE_B_PRICE"));
-				ubm.setBoardAddress(rs.getString("BOARD_ADDRESS"));
-				ubm.setBoardAddComment(rs.getString("BOARD_ADDRESS_COMMENT"));
-				ubm.setBoardBlind(rs.getString("BOARD_BLIND"));
+				ubm.setUserName(rs.getString("NAME"));
+				ubm.setOnedaySprice(rs.getInt("BS"));
+				ubm.setOnedayMprice(rs.getInt("BM"));
+				ubm.setOnedayBprice(rs.getInt("BB"));
+				list.add(ubm);
 			}
 		}
 		catch(SQLException e) {

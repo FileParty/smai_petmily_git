@@ -18,26 +18,17 @@ import com.petmily.petsitter.model.vo.PetSitterCertificate;
 import com.petmily.review.model.vo.ReviewPetSitter;
 import com.petmily.user.model.vo.User;
 
-/**
- * Servlet implementation class BoardList
- */
 @WebServlet("/BoardList.do")
 public class BoardList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public BoardList() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		
 		
@@ -94,14 +85,12 @@ public class BoardList extends HttpServlet {
 		
 		request.setAttribute("petsInfo", petsST);
 		
-		request.getRequestDispatcher(request.getContextPath()+"/views/board/boardListDetail.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/board/boardListDetail.jsp").forward(request, response);
 		
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

@@ -38,12 +38,16 @@ public class UserBookMarkListServlet extends HttpServlet {
 		}
 		else {
 			String id = request.getParameter("userId");
-			System.out.println("회원정보수정 화면으로 이동하기 위해 확인하는 id 값 : "+id);
+			System.out.println("북마크로직 이동하기 위해 확인하는 id 값 : "+id);
 			
 //			DB에서 id와 동일한 정보를 가져온다
 			List<UserBookMarkBoard> list = new UserService().userBookMarkList(id);
-			for(UserBookMarkBoard l : list) {
-				System.out.println("회원이 북마크한 리스트. dao에서 북마크 list값을 잘 가져왔는가? : "+l);				
+			
+			System.out.println("서블릿 list: "+list);
+			
+//			출력문
+			for(int i=0; i<list.size(); i++) {
+				System.out.println("회원이 북마크한 리스트. dao에서 북마크 list값을 잘 가져왔는가? : "+list.get(i));				
 			}
 			
 //			가져온 내용을 저장하고 아이디값과 함께 매핑값을 보낸다.
