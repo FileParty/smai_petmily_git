@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import="java.util.List,com.petmily.user.model.vo.UserBookMark,com.petmily.user.model.vo.User" %>
+<%@ page import="java.util.List,com.petmily.reservation.model.vo.PetReservation" %>
 <%
-	List<UserBookMark> list = (List)request.getAttribute("list");
-	User loginUser = null;
+	List<PetReservation> list = (List)request.getAttribute("list");
+	int count = 1;
 %>    
     
 <%@ include file="/views/common/header.jsp" %>
@@ -115,7 +115,7 @@
 <body>
     <section>
         <div class="container">
-            <form action="<%=request.getContextPath()%>/user/request" method="post" onsubmit="return test();">
+          <form action="<%=request.getContextPath()%>/request/cancels" method="post">
             <div class="row">
             <div class="col-2 menu">
                     <div id="menu">
@@ -156,9 +156,12 @@
                     <img class="top-img" style="width: 100%; margin-top: -230px;" src="https://images.unsplash.com/flagged/photo-1548245643-7b805f2f93d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80">
                 </div>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item">회원 정보</li>
-                    <li class="breadcrumb-item active">회원 탈퇴</li>
+                  
+                    <li class="breadcrumb-item active" style="font-size:15px;">요청 중인 예약 >></li>
                 </ul>
+              
+                  
+                   
                    <!-- 콘텐츠 영역 -->
                    <table id="enrollTB">
 
@@ -175,32 +178,40 @@
                         <th>채팅</th>
                     </tr>
                     
-                   
-	                    <tr>
+                   	<%for(PetReservation pr : list) {%>
+	                    <tr align="center">
 	                    
-	                    	<td></td>
 	                    	
-	                    	<td></td>
+	                    	<td style="font-size:12px;"><%=pr.getReservationCode() %></td> 
 	                    	
-	                    	<td></td>
+	                    	<td><input type="checkbox" name="choose" value="<%=pr.getReservationCode()%>"></td>	                    	                    	
 	                    	
-	                    	<td></td>
+	                    	<td style="font-size:12px;"><%=pr.getCheckIn().substring(0,11)%></td>
 	                    	
-							<td></td>
+	                    	<td style="font-size:12px;"><%=pr.getCheckOut().substring(0,11) %></td>
+	                    	
+							<td><%=pr.getSitterName() %></td>
 							
-							<td></td>
+							<td style="font-size:12px;width:300px;"><%=pr.getBoardTitle() %></td>
 							
-							<td></td> 
+							<td style="font-size:12px;"><input onclick="requestCheck()" type="button" id="request" value="상세 요청 확인"></td>
+							<td style="font-size:12px;"><%=pr.getResType() %></td> 
 							
-							<td></td> 
+							<td style="font-size:12px;"><%=pr.getPrice() %></td> 
 							
-							<td></td> 
+							<td style="font-size:12px;"><input type="button" id="chat" value="채팅"></td>
 	                    </tr>
-	             
-    
+	                   
+	             <%} %>
+    					
                     
                 </table>
-
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+							<input style="margin-left:400px;" type="submit" value="요청 취소" onclick="cancel();">
                     </div>
                 </div>
             </div>
@@ -218,6 +229,10 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
+function requestCheck() {
+	
+	window.open("","_blank","width=800px,height=800px")
+}
     
     
 

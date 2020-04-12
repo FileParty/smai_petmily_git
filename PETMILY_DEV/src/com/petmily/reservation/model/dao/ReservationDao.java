@@ -38,25 +38,20 @@ public class ReservationDao {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, id);
+			
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
 				pr = new PetReservation();
-				pr.setReservationCode(rs.getInt("RESERVATION_CODE"));
-				pr.setPetSitterId(rs.getString("PET_SETTER_ID"));
-				pr.setUserId(rs.getString("USER_ID"));
-				pr.setBoardNo(rs.getInt("BOARD_CODE"));
-				pr.setCheckIn(rs.getString("CHECKIN_DATE"));
-				pr.setCheckOut(rs.getString("CHECKOUT_DATE"));
-				pr.setCareType(rs.getString("CARE_TYPE"));
-				pr.setPetType(rs.getString("PET_TYPE"));
-				pr.setPetBath(rs.getInt("PET_BATH"));
-				pr.setPetMedication(rs.getString("PET_MEDICATION"));
-				pr.setPetPickup(rs.getString("PET_PICK_UP"));
-				pr.setPlusQuestion(rs.getString("PLUS_QUESTIONS"));
-				pr.setPriceEndDate(rs.getString("PRICE_END_DATE"));
+				pr.setSitterName("PPAP");
+				pr.setReservationCode(rs.getInt("RCODE"));
+				pr.setCheckIn(rs.getString("CIN"));
+				pr.setCheckOut(rs.getString("COUT"));
+				pr.setResType(rs.getString("RES"));
 				pr.setPrice(rs.getInt("PRICE"));
-				pr.setResType(rs.getString("RES_TYPE"));
+				pr.setPetSitterId(rs.getString("PID"));
+				pr.setBoardTitle(rs.getString("TITLE"));
+				
 				list.add(pr);
 			}
 		}catch(SQLException e) {

@@ -1,4 +1,4 @@
-package com.petmily.userReservation.controller;
+package com.petmily.reservation.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,20 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.petmily.reservation.model.vo.PetReservation;
-import com.petmily.reservation.service.ReservationService;
-
 /**
- * Servlet implementation class UserReservationRequestServlet
+ * Servlet implementation class UserRequestCancelServlet
  */
-@WebServlet("/user/request")
-public class UserReservationRequestServlet extends HttpServlet {
+@WebServlet("/request/cancels")
+public class UserRequestCancelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserReservationRequestServlet() {
+    public UserRequestCancelServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +29,13 @@ public class UserReservationRequestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = "user02";
-		List<PetReservation> list= new ReservationService().requestRev(id);
-		System.out.println(list.get(0));
-		System.out.println(list.get(1));
+		String[] revNo = request.getParameterValues("choose");
+		List list = new ArrayList();
+		for(int i=0;i<revNo.length;i++) {
+			list.add(revNo[i]);
+		}
+		
+		
 	}
 
 	/**
