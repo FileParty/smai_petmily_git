@@ -396,8 +396,8 @@ public class UserDao {
 	}
 	
 //	북마크 목록 페이징 처리 로직
-	public int selectBoardCount(Connection conn) {
-		
-		
-	}
+//	public int selectBoardCount(Connection conn) {
+//		
+//		
+//	}
 }
