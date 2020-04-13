@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.petmily.reservation.service.ReservationService;
+
 /**
  * Servlet implementation class UserRequestCancelServlet
  */
@@ -30,10 +32,16 @@ public class UserRequestCancelServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] revNo = request.getParameterValues("choose");
-		List list = new ArrayList();
+		
+		int as[] = new int[revNo.length] ;
+		
 		for(int i=0;i<revNo.length;i++) {
-			list.add(revNo[i]);
+			as[i] = Integer.parseInt(revNo[i]);
 		}
+		int result = new ReservationService().requestCancel(as);
+		
+	
+		
 		
 		
 	}

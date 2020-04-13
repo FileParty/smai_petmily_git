@@ -115,7 +115,7 @@
 <body>
     <section>
         <div class="container">
-          <form action="<%=request.getContextPath()%>/request/cancels" method="post">
+          
             <div class="row">
             <div class="col-2 menu">
                     <div id="menu">
@@ -156,66 +156,33 @@
                     <img class="top-img" style="width: 100%; margin-top: -230px;" src="https://images.unsplash.com/flagged/photo-1548245643-7b805f2f93d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80">
                 </div>
                 <ul class="breadcrumb">
-                  
-                    <li class="breadcrumb-item active" style="font-size:15px;">요청 중인 예약 >></li>
+                    <li class="breadcrumb-item active" style="font-size:15px;">진행 중인 예약 >></li>
                 </ul>
               
                   
                    
                    <!-- 콘텐츠 영역 -->
-                   <table id="enrollTB">
-
-                    <tr class="tr-blank">
-                        <th>no</th>
-            			<th>선택</th>
-            			<th>체크인</th>
-                        <th>체크 아웃</th>
-                        <th>펫시터 명</th>
-                        <th>제목</th>
-                        <th>요청 상세</th>
-                        <th>상태</th>
-                        <th>총 금액</th>
-                        <th>채팅</th>
-                    </tr>
-                    
-                   	<%for(PetReservation pr : list) {%>
-	                    <tr align="center">
-	                    
-	                    	
-	                    	<td style="font-size:12px;"><%=pr.getReservationCode() %></td> 
-	                    	
-	                    	<td><input type="checkbox" name="choose" value="<%=pr.getReservationCode()%>"></td>	                    	                    	
-	                    	
-	                    	<td style="font-size:12px;"><%=pr.getCheckIn().substring(0,11)%></td>
-	                    	
-	                    	<td style="font-size:12px;"><%=pr.getCheckOut().substring(0,11) %></td>
-	                    	
-							<td><%=pr.getSitterName() %></td>
-							
-							<td style="font-size:12px;width:300px;"><%=pr.getBoardTitle() %></td>
-							
-							<td style="font-size:12px;"><input onclick="requestCheck()" type="button" id="request" value="상세 요청 확인"></td>
-							<td style="font-size:12px;"><%=pr.getResType() %></td> 
-							
-							<td style="font-size:12px;"><%=pr.getPrice() %></td> 
-							
-							<td style="font-size:12px;"><input type="button" id="chat" value="채팅"></td>
-	                    </tr>
-	                   
-	             <%} %>
-    					
-                    
-                </table>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-							<input style="margin-left:400px;" type="submit" value="요청 취소" >
+                  <table border=1>
+                  	<tr style="width:500px;">
+                  		<td rowspan="2">1</td>
+                  		<td colspan="3">2</td>
+                  		
+                  	</tr>
+                  	<tr>
+                  		<td colspan="3">1</td>
+                  		
+                  		
+                  	</tr>
+                  	<tr>
+                  		<td>1</td>
+                  		<td >8</td>
+                  		<td>9</td>
+                  	</tr>
+                  </table>
                     </div>
                 </div>
             </div>
-        </form>
+        
         </div>
     </section>
 
@@ -229,11 +196,7 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
-function requestCheck() {
-	
-	window.open("","_blank","width=800px,height=800px")
-}
-    
+
     
 
 
