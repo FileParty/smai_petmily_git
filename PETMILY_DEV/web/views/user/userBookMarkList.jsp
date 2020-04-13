@@ -132,9 +132,9 @@
 <body>
     <section>
         <div class="container">
-            <form action="<%=request.getContextPath()%>/sitter/write?userId=<%=loginUser.getUserId() %>" method="post" enctype="multipart/form-data">
+            <form action="<%=request.getContextPath()%>" method="post" enctype="multipart/form-data">
             <div class="row">
-            <div class="col-2 menu">
+            	<div class="col-2 menu">
                     <div id="menu">
                         <ul type="none">
                             <li class="title"><a href="<%=request.getContextPath()%>/userInfo">회원정보</a></li>
@@ -142,7 +142,7 @@
                             <li class="content"><a href="<%=request.getContextPath()%>/userUpdate?userId=<%=loginUser.getUserId()%>"> - 회원정보 수정</a></li>
                             <li class="content"><a href="<%=request.getContextPath()%>/userDelete?userId=<%=loginUser.getUserId()%>"> - 회원 탈퇴</a></li>
                             <li class="content"><a href="<%=request.getContextPath()%>/userBookMarkList?userId=<%=loginUser.getUserId()%>"> - 북마크</a></li>
-                            <li class="content"><a href="<%=request.getContextPath()%>/"> - 작성 후기</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/userReview?userId=<%=loginUser.getUserId()%>"> - 작성 후기</a></li>
                             <br/>
         
                             <li class="title">펫 프로필</li>
@@ -190,27 +190,31 @@
                     </tr>
                     
                      <% for(UserBookMarkBoard ubmb : list) { %>
-	                    <tr>
-	                    	<!-- no -->
-							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getBoardCode() %></p></td>
-							<!-- 제목 -->
-							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getBoardTitle() %></p></td>
-							<!-- 펫 시터 이름 --> 
-							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getUserName() %></p></td> 
-							<!-- 일박 케어 요금 s,m,b-->
-							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedaySprice() %>원</p></td> <!-- s --> 
-							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayMprice() %>원</p></td> <!-- m -->
-							<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayBprice() %>원</p></td> <!-- b -->
-							<!-- 게시글 링크 -->
-							<td><button id="detailViewBTN" 
-							onclick="location.replace('<%=request.getContextPath()%>/boardList.do?userId=<%=loginUser.getUserId()%>&boardCode=<%=ubmb.getBoardCode()%>')">상세 내역 보기</button></td> 
-	                    </tr>
+                    <tr>
+                    	<!-- no -->
+						<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getBoardCode() %></p></td>
+						<!-- 제목 -->
+						<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getBoardTitle() %></p></td>
+						<!-- 펫 시터 이름 --> 
+						<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getUserName() %></p></td> 
+						<!-- 일박 케어 요금 s,m,b-->
+						<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedaySprice() %>원</p></td> <!-- s --> 
+						<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayMprice() %>원</p></td> <!-- m -->
+						<td><p style="text-align: center; font-size: 12px; margin-top: 7px;"><%= ubmb.getOnedayBprice() %>원</p></td> <!-- b -->
+						<!-- 게시글 링크 -->
+						<td><button id="detailViewBTN" 
+						onclick="location.replace('<%=request.getContextPath()%>/boardList.do?userId=<%=loginUser.getUserId()%>&boardCode=<%=ubmb.getBoardCode()%>')">상세 내역 보기</button></td> 
+                    </tr>
 	                 <% } %>
-    
                     
                 </table>
-
-                    </div>
+                
+                <br><br><br>
+				
+				<div style="font-size:12px; padding-left: 370px;"><%=request.getAttribute("pageBar") %></div>
+				
+				
+               </div>
                 </div>
             </div>
         </form>

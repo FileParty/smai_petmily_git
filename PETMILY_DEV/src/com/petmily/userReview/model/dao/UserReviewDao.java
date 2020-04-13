@@ -29,6 +29,7 @@ public class UserReviewDao {
 	}
 
 	
+//	회원정보 - 작성후기 리스트 가져오는 로직
 	public List<UserReview> selectUserReviewList(Connection conn,String userId){
 		
 		PreparedStatement pstmt=null;

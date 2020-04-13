@@ -369,21 +369,26 @@ public class UserDao {
 //			페이징 처리시, SQL문도 수정이 필요하다.
 //			RNUM 처리를 위해 서브쿼리 수정이 필요하다.
 			pstmt.setString(1, id);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			
 			System.out.println("dao의 id :"+id);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				ubm = new UserBookMarkBoard();
-				ubm.setBoardCode(rs.getInt("CODE"));
-				ubm.setUserId(rs.getString("ID"));
-				ubm.setBoardTitle(rs.getString("BOARD_TITLE"));
-				ubm.setUserName(rs.getString("NAME"));
+				ubm.setBoardCode(rs.getInt("BCODE"));
+				ubm.setPetSitterId(rs.getString("PSI"));
+				ubm.setBoardTitle(rs.getString("BT"));
 				ubm.setOnedaySprice(rs.getInt("BS"));
 				ubm.setOnedayMprice(rs.getInt("BM"));
 				ubm.setOnedayBprice(rs.getInt("BB"));
+				ubm.setUserName(rs.getString("NA"));
+				ubm.setRnum(rs.getInt("RNUM"));
 				list.add(ubm);
 			}
+			
+			System.out.println("dao에서 잘 담아졌는가(dao) : "+list);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -395,9 +400,27 @@ public class UserDao {
 		return list;
 	}
 	
-//	북마크 목록 페이징 처리 로직
-//	public int selectBoardCount(Connection conn) {
-//		
-//		
-//	}
+//	북마크 목록 페이징 처리 로직 
+//	page bar 만들기(int totalData)
+	public int selectBoardCount(Connection conn, String id) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = prop.getProperty("selectBookMarkCount");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs= pstmt.executeQuery();
+			rs.next();
+			count= rs.getInt(1);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
 }

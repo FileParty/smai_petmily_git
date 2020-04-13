@@ -12,14 +12,12 @@ public class UserReviewService {
 	
 	private UserReviewDao dao=new UserReviewDao();
 	
-	public List<UserReview> selectUserReviewList(String userId){
-		
-		Connection conn=getConnection();
-		
-		List<UserReview> list=dao.selectUserReviewList(conn,userId);
-		
-		close(conn);
-		
+	
+//	회원정보 - 작성후기 목록 가져오는 로직
+	public List<UserReview> selectUserReviewList(String userId){ 
+		Connection conn=getConnection(); 
+		List<UserReview> list=dao.selectUserReviewList(conn,userId); 
+		close(conn); 
 		return list;
 		
 	}

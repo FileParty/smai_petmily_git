@@ -260,7 +260,7 @@ label.custom-file-label::after{
                             <li class="content"><a href="<%=request.getContextPath()%>/userUpdate?userId=<%=loginUser.getUserId()%>"> - 회원정보 수정</a></li>
                             <li class="content"><a href="<%=request.getContextPath()%>/userDelete?userId=<%=loginUser.getUserId()%>"> - 회원 탈퇴</a></li>
                             <li class="content"><a href="<%=request.getContextPath()%>/userBookMarkList?userId=<%=loginUser.getUserId()%>"> - 북마크</a></li>
-                            <li class="content"><a href="<%=request.getContextPath()%>/"> - 작성 후기</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/userReview?userId=<%=loginUser.getUserId()%>"> - 작성 후기</a></li>
                             <br/>
         
                             <li class="title">펫 프로필</li>

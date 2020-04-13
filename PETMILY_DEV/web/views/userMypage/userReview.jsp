@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 
 <%
 	List<UserReview> list=(List)request.getAttribute("list");
+	System.out.println("후기에 있는 list 내용 :"+list);
 	int count=1;
 %>
 
@@ -115,19 +116,21 @@ pageEncoding="UTF-8"%>
 
 </style>
 
+
+<!-- 회원정보 : 작성후기 화면 -->
     <section>
         <div class="container">
-            <form action="<%=request.getContextPath()%>/sitter/write?userId=sebin" method="post" onsubmit="return test();" enctype="multipart/form-data">
+            <form action="<%=request.getContextPath()%>" method="post" onsubmit="return test();" enctype="multipart/form-data">
             <div class="row">
             <div class="col-2 menu">
                     <div id="menu">
                         <ul type="none">
-                            <li class="title">회원정보</li>
+                            <li class="title"><a href="<%=request.getContextPath()%>/userInfo">회원정보</a></li>
                             <hr class="hr-line"/>
-                            <li class="content"><a href=""> - 회원정보 수정</a></li>
-                            <li class="content"><a href=""> - 회원 탈퇴</a></li>
-                            <li class="content"><a href=""> - 북마크</a></li>
-                            <li class="content"><a href=""> - 작성 후기</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/userUpdate?userId=<%=loginUser.getUserId()%>"> - 회원정보 수정</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/userDelete?userId=<%=loginUser.getUserId()%>"> - 회원 탈퇴</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/userBookMarkList?userId=<%=loginUser.getUserId()%>"> - 북마크</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/userReview?userId=<%=loginUser.getUserId()%>"> - 작성 후기</a></li>
                             <br/>
         
                             <li class="title">펫 프로필</li>
@@ -159,7 +162,7 @@ pageEncoding="UTF-8"%>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item">회원 정보</li>
-                    <li class="breadcrumb-item active">회원 탈퇴</li>
+                    <li class="breadcrumb-item active">작성 후기</li>
                 </ul>
                    <!-- 콘텐츠 영역 -->
                    <table id="enrollTB">
@@ -182,7 +185,7 @@ pageEncoding="UTF-8"%>
 						<td><%=ur.getPetsitterName() %></td>
 						<td><%=ur.getCheckIn() %></td>
 						<td><%=ur.getCheckOut() %></td>
-						<td><a href="">작성글 보기</a></td>
+						<td><a href="<%=request.getContextPath()%>/">작성글 보기</a></td>
                     </tr>
     				<%} }%>
                     

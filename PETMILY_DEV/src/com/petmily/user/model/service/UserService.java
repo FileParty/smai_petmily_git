@@ -139,9 +139,9 @@ public class UserService {
 	}
 	
 //	북마크 목록 페이징 처리 로직
-	public int selectBoardCount() {
+	public int selectBoardCount(String id) {
 		Connection conn = getConnection();
-		int count = dao.selectBoardCount(conn);
+		int count = dao.selectBoardCount(conn, id);
 		close(conn);
 		return count;
 	}

@@ -12,11 +12,12 @@ public class UserBookMarkBoard {
 	private int onedaySprice; // one_day_care_s_price (not null)
 	private int onedayMprice; // one_day_care_m_price (not null)
 	private int onedayBprice; // one_day_care_b_price (not null)
+	private int rnum;
 	
 	public UserBookMarkBoard() { }
 
 	public UserBookMarkBoard(String userId, String petSitterId, String userName, int boardCode, String boardTitle,
-			int onedaySprice, int onedayMprice, int onedayBprice) {
+			int onedaySprice, int onedayMprice, int onedayBprice, int rnum) {
 		super();
 		this.userId = userId;
 		this.petSitterId = petSitterId;
@@ -26,6 +27,14 @@ public class UserBookMarkBoard {
 		this.onedaySprice = onedaySprice;
 		this.onedayMprice = onedayMprice;
 		this.onedayBprice = onedayBprice;
+		this.rnum = rnum;
+	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 
 	public String getUserId() {
