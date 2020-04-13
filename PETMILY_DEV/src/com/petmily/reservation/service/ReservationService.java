@@ -1,9 +1,9 @@
 package com.petmily.reservation.service;
 
-import static com.petmily.common.JDBCTemplate.close;
-import static com.petmily.common.JDBCTemplate.getConnection;
-import static com.petmily.common.JDBCTemplate.commit;
-import static com.petmily.common.JDBCTemplate.rollback;
+import static com.petmily.board.common.JDBCTemplate.close;
+import static com.petmily.board.common.JDBCTemplate.getConnection;
+import static com.petmily.board.common.JDBCTemplate.commit;
+import static com.petmily.board.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.petmily.reservation.model.dao;
 
-import static com.petmily.common.JDBCTemplate.close;
+import static com.petmily.board.common.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;

@@ -5,8 +5,6 @@
 
 
 
-<%@ include file="/views/common/header.jsp" %>
-
 <style>
    *{   
        
@@ -366,4 +364,3 @@ label.custom-file-label::after{
 
 
 </script>
-<%@ include file="/views/common/footer.jsp" %>

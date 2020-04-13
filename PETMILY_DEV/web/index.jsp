@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>
+
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/index.css" type = "text/css">
 <style>
 	div#mainText{
@@ -12,6 +12,7 @@
 		opacity:0.7;
 	}
 </style>
+<script src="http://code/.jquery.com/jquery-3.4.1.min.js"></script>
 <section>
 	<div id="mainText">
 		<p>PET:MILY</p>
@@ -131,4 +132,4 @@
 		})
 	})
 </script>
-<%@ include file="/views/common/footer.jsp" %>
+

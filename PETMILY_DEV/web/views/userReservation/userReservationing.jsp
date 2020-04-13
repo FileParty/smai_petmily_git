@@ -7,7 +7,7 @@
 	int count = 1;
 %>    
     
-<%@ include file="/views/common/header.jsp" %>
+
 <style>
    *{   
         box-sizing: border-box;
