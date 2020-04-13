@@ -1,93 +1,166 @@
 package com.petmily.board.service;
 
-import static com.petmily.board.common.JDBCTemplate.close;
-import static com.petmily.board.common.JDBCTemplate.commit;
-import static com.petmily.board.common.JDBCTemplate.getConnection;
-import static com.petmily.board.common.JDBCTemplate.rollback;
+import static com.petmily.common.JDBCTemplate.close;
+import static com.petmily.common.JDBCTemplate.commit;
+import static com.petmily.common.JDBCTemplate.getConnection;
+import static com.petmily.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.petmily.board.model.dao.BoardDao;
 import com.petmily.board.model.vo.PetSitterBoard;
+import com.petmily.board.model.vo.PlusOptionService;
+import com.petmily.pet.model.vo.PetInfo;
+import com.petmily.petsitter.model.vo.PetSitter;
+import com.petmily.petsitter.model.vo.PetSitterCertificate;
+import com.petmily.review.model.vo.ReviewPetSitter;
+import com.petmily.user.model.vo.User;
 
 public class BoardService {
-   private BoardDao dao = new BoardDao();
-   
-   public int boardInsert(PetSitterBoard  pb) {
-      //게시글 등록
-      Connection conn = getConnection();
-      
-     
-      int set = dao.setting(conn,pb.getUserId());
-      
-    
-      
- 
-	     int result = dao.boardInsert(conn, pb);
-	     int boardNo = dao.boardNo(conn,pb.getUserId());
-	     System.out.println("service넘버:"+boardNo);
-	      pb.setBoardNo(boardNo);
-	      if(result>0) {
-	         for(String img : pb.getBoardImages()) {
-	            result = dao.boardImg(conn, pb,img);
-	         }
-	         if(result>0) {
-	            for(String plus : pb.getPlus()) {
-	               result = dao.plusOptionInsert(conn,plus,pb,pb.getBoardNo());
-	            }
-	         }else {
-	            rollback(conn);
-	         }
-	         if(result>0) {
-	            for(String defaults : pb.getServiceTypes()) {
-	               result = dao.defaultOption(conn,defaults,pb,pb.getBoardNo());
-	            }         
-	         }else {
-	            rollback(conn);
-	         }
-	         }else { 
-	            commit(conn);
-	      }
-        close(conn);
-      return result;
-   }
-   
-   public PetSitterBoard boardDetail(String userId) {
-      Connection conn = getConnection();
-      PetSitterBoard pb = new PetSitterBoard();
-      pb = dao.boardDetail(conn,userId);
-      pb = dao.imgDetail(conn,pb);
-      pb = dao.plusOptionDetail(conn,pb);
-      pb= dao.defaultOptionDetail(conn,pb);
-      System.out.println("dao: " +pb.getBoardImages());
-      System.out.println("dao2: " +pb.getSmallPrice1());
-      System.out.println("pb:" + pb);
-      close(conn);
-      
-      return pb;
-   }
-   public PetSitterBoard boardUpdate(String userId) {
-	   Connection conn = getConnection();
-	   PetSitterBoard pb = new PetSitterBoard();
-	   	  pb = dao.boardUpdate(conn,userId);
-	      pb = dao.imgUpdate(conn,pb);
-	      pb = dao.plusOptionUpdate(conn,pb);
-	      pb= dao.defaultOptionUpdate(conn,pb);
-	      close(conn);
-	      return pb;
-   }
-   
-   
+	
+	private BoardDao dao = new BoardDao();
+	
+	public PetSitterBoard getPetSitterBoardT(int boardCode) {
+		Connection conn = getConnection();
+		PetSitterBoard sitterBoardT = dao.getPetSitterBoardT(conn, boardCode);
+		close(conn);
+		return sitterBoardT;
+	}
+	
+	public String getSitterId(int boardCode) {
+		Connection conn = getConnection();
+		String sitterId = dao.getSitterId(conn, boardCode);
+		close(conn);
+		return sitterId;
+	}
+	
+	public boolean bookmark(String userId, String sitterId) {
+		Connection conn = getConnection();
+		boolean bookmark = dao.bookmark(conn, userId, sitterId);
+		close(conn);
+		return bookmark;				
+	}
+	
+	public boolean getCertificateFlag(String sitterId) {
+		Connection conn = getConnection();
+		boolean certificateFlag = dao.getCertificateFlag(conn, sitterId);
+		close(conn);
+		return certificateFlag;		
+	}
+	
+	public List<PetSitterCertificate> getCertificate(String sitterId) {
+		Connection conn = getConnection();
+		List<PetSitterCertificate> certificates = dao.getCertificate(conn, sitterId);
+		close(conn);
+		return certificates;
+	}
+	
+	public List<ReviewPetSitter> getReviews(String sitterId){
+		Connection conn = getConnection();
+		List<ReviewPetSitter> reviews = dao.getReviews(conn, sitterId);
+		close(conn);
+		return reviews;
+	}
+	
+	public void bookmarkDelete(String userId, String sitterId) {
+		Connection conn = getConnection();
+		boolean result = dao.bookmarkDelete(conn, userId, sitterId);
+		
+		if(result) {
+			commit(conn);
+		}
+		if(result) {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+	}
+	
+	public void bookmarkAdd(String userId, String sitterId) {
+		Connection conn = getConnection();
+		boolean result = dao.bookmarkAdd(conn, userId, sitterId);
+		
+		if(result) {
+			commit(conn);
+		}
+		if(result) {
+			rollback(conn);
+		}
+		
+		close(conn);
+	}
+	
+	public PetSitter getPetSitterT(String sitterId) {
+		Connection conn = getConnection();
+		PetSitter sitterT = dao.getPetSitterT(conn, sitterId);
+		close(conn);
+		return sitterT;
+	}
+	
+	public User getUserInfoT(String sitterId) {
+		Connection conn = getConnection();
+		User userInfoT = dao.getUserInfoT(conn, sitterId);
+		close(conn);
+		return userInfoT;
+	}
+	
+//	public String getSitterName(String sitterId) {
+//		Connection conn = getConnection();
+//		String sitterName = dao.getSitterName(conn, sitterId);
+//		close(conn);
+//		return sitterName;
+//	}
 
+	public List<String> getDefaultService(int boardCode){
+		Connection conn = getConnection();
+		List<String> defaultServiceList = dao.getDefaultService(conn, boardCode);
+		close(conn);
+		return defaultServiceList;
+	}
+	
+	public List<PlusOptionService> getPOService(int boardCode) {
+		Connection conn = getConnection();
+		List<PlusOptionService> pOService = dao.getPOService(conn, boardCode);
+		close(conn);
+		return pOService;
+	}
+	
+	public List<String> getBoardImg(int boardCode){
+		Connection conn = getConnection();
+		List<String> boardImgs = dao.getBoardImg(conn, boardCode);
+		close(conn);
+		return boardImgs;
+	}
+	
+	public List<PetInfo> getPetInfoT(String userId){
+		Connection conn = getConnection();
+		List<PetInfo> petsT = dao.getPetInfoT(conn, userId);
+		close(conn);
+		return petsT;
+	}
+	
 
-//   
-//   public PetSitterBoard imgUpdate(int boardNo) { Connection conn =
-//    getConnection(); PetSitterBoard pb = dao.boardUpdate(conn, boardNo); }
-//    
-   
-   
-   
-   
-   
-   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

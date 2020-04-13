@@ -40,7 +40,7 @@
 
 %>
       
-<%@ include file="/views/common/header.jsp"%>
+
 
 
 <link href="<%=request.getContextPath() %>/css/PST.css" rel="stylesheet">
@@ -1151,5 +1151,5 @@ select_end.onclick = function(){
 </script>
 
 
-<%@ include file="/views/common/footer.jsp"%>
+
 <script src="js/PST.js"></script>

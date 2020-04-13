@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.petmily.board.service.BoardService2;
+import com.petmily.board.service.BoardService;
 
 /**
  * Servlet implementation class BookmarkChange
@@ -36,10 +36,10 @@ public class BookmarkChange extends HttpServlet {
 		String sitterId = request.getParameter("sitterId");
 		
 		if(bFlag) {
-			new BoardService2().bookmarkDelete(userId, sitterId);
+			new BoardService().bookmarkDelete(userId, sitterId);
 			response.getWriter().write("t");
 		}else {
-			new BoardService2().bookmarkAdd(userId, sitterId);
+			new BoardService().bookmarkAdd(userId, sitterId);
 			response.getWriter().write("f");
 		}
 		

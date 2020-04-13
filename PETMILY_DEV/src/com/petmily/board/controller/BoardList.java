@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.petmily.board.model.vo.PetSitterBoard;
 import com.petmily.board.model.vo.PlusOptionService;
-import com.petmily.board.service.BoardService2;
+import com.petmily.board.service.BoardService;
 import com.petmily.pet.model.vo.PetInfo;
 import com.petmily.petsitter.model.vo.PetSitter;
 import com.petmily.petsitter.model.vo.PetSitterCertificate;
@@ -44,38 +44,38 @@ public class BoardList extends HttpServlet {
 		int boardCode = Integer.parseInt(request.getParameter("boardCode"));
 		String userId = (String)request.getParameter("userId");
 		
-		PetSitterBoard sitterBoardT = new BoardService2().getPetSitterBoardT(boardCode);		
+		PetSitterBoard sitterBoardT = new BoardService().getPetSitterBoardT(boardCode);		
 		String sitterId = sitterBoardT.getUserId();
-		PetSitter sitterT = new BoardService2().getPetSitterT(sitterId);
-		User userInfoT = new BoardService2().getUserInfoT(sitterId);
+		PetSitter sitterT = new BoardService().getPetSitterT(sitterId);
+		User userInfoT = new BoardService().getUserInfoT(sitterId);
 		
 //		String sitterName = new BoardService().getSitterName(sitterId);
 		
 		// bookmark check 여부 / check 시 true 
-		boolean bookmark = new BoardService2().bookmark(userId, sitterId);
+		boolean bookmark = new BoardService().bookmark(userId, sitterId);
 		
 		// 자격증 보유여부 / 보유 시 true
-		boolean certificateFlag = new BoardService2().getCertificateFlag(sitterId);
+		boolean certificateFlag = new BoardService().getCertificateFlag(sitterId);
 		
 		
 		// 자격증 보유시 자격증에 대한 정보들 list로 가져옴(다수일 가능성 => list 사용)
 		if(certificateFlag) {
-			List<PetSitterCertificate> certificateT = new BoardService2().getCertificate(sitterId);
+			List<PetSitterCertificate> certificateT = new BoardService().getCertificate(sitterId);
 			request.setAttribute("certificateT", certificateT);
 		}
 		
 		// 펫시터에 대한 리뷰 테이블 / 답글 포함
-		List<ReviewPetSitter> reviews = new BoardService2().getReviews(sitterId);
+		List<ReviewPetSitter> reviews = new BoardService().getReviews(sitterId);
 		
 		// 기본제공 서비스
-		List<String> defaultServiceList = new BoardService2().getDefaultService(boardCode);
-		List<PlusOptionService> pOServiceList = new BoardService2().getPOService(boardCode);
+		List<String> defaultServiceList = new BoardService().getDefaultService(boardCode);
+		List<PlusOptionService> pOServiceList = new BoardService().getPOService(boardCode);
 		
 		// 게시글 이미지
-		List<String> boardImgs = new BoardService2().getBoardImg(boardCode);
+		List<String> boardImgs = new BoardService().getBoardImg(boardCode);
 		
 		// 사용자의 pet 정보
-		List<PetInfo> petsST = new BoardService2().getPetInfoT(userId);
+		List<PetInfo> petsST = new BoardService().getPetInfoT(userId);
 		
 		
 		request.setAttribute("bookmark", bookmark);
