@@ -21,7 +21,7 @@
     <section>
     
         <div class="container">
-            <form action="<%=request.getContextPath() %>/sitter/write"  method="post" onsubmit="return test();" enctype="multipart/form-data">
+            <form action="<%=request.getContextPath() %>/sitter/write" method="post" onsubmit="return test();" enctype="multipart/form-data">
             <div class="row">
             <div class="col-2 menu">
                     <div id="menu">

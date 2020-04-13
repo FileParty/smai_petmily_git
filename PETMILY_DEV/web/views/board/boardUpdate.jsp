@@ -5,12 +5,16 @@
     PetSitterBoard pb = (PetSitterBoard)request.getAttribute("pb");
     String plus ="";
     String basic ="";
-      for(int i=0;i<pb.getPlus().size();i++) {
+    /* String img = ""; */
+      for(int i=0;pb.getPlus()!=null && i<pb.getPlus().size();i++) {
          plus+=pb.getPlus().get(i);
       }
-      for(int i=0;i<pb.getServiceTypes().size();i++) {
+      for(int i=0;pb.getServiceTypes()!=null && i<pb.getServiceTypes().size();i++) {
          basic+=pb.getServiceTypes().get(i);
       }
+     /*  for(int i=0;i<pb.getBoardImages().size();i++) {
+          img+=pb.getBoardImages().get(i);
+       } */
     %>
 <!DOCTYPE html>
 <html>
@@ -95,12 +99,17 @@
                             <td colspan="1">
                                 <div class="input-group mb-3" style="width: 500px; height: 25px; margin-top: 10px;">
                                     <div class="files">
+                                    
                                        <input style="height:40px;" type="button" value="파일첨부" class="addFlie"onclick="addFile();">
-                                      <input type="text" value="매일산책.png" name="filefuck"  class="filefuckk">
-                                      <input type="text" value="매일산책.png" name="filefuck"  class="filefuck">
+                                      	
                                     </div>
                                     <div class="selectFile">
+                                    <%if(pb.getBoardImages()!=null) {%>
+                                    <%for(String  img : pb.getBoardImages()) {%>
                                      <input type="hidden"class="fileNo" name="count">
+                                     <span><%=img%></span>
+                                      	<%}%>
+                                      	<%} %>
                                     </div>
                                     </div>
                               
@@ -421,7 +430,7 @@
                                 </tr>
                                 <tr>
                                     <td>왕복</td>
-                                    <td><input id="allWay" name="allWay" style="margin-left: 10px;  width: 150px; height: 25px; font-size: 12px;"type="number" class="form-control pick" step="1000" min='5000' max='30000' value="<%=pb.getAllWayPrice()%>"></td>
+                                    <td><input id="allWay" name="allWay" style="margin-left: 10px;  width: 150px; height: 25px; font-size: 12px;"type="number" class="form-control pick" step="1000" min='5000' max='30000' value="<%=pb.getAllWayPrice() %>"></td>
                                     
                                 </tr>
 
@@ -454,6 +463,7 @@
 
 $(function () {
 	searchMap();
+	$("#addFile").trigger('click');
 	})
 	if(document.getElementById("myCheckbox8").checked==true) {
 		$(".row3").show();
@@ -569,11 +579,12 @@ $(function(){
          
          var num =1;
          function addFile() {
-             $(".filefuckk").remove();
+			
              let file =$("<input>").attr({
                  "type":"file",
                  "name": "file"+num,
-                 "id":"file"+num
+                 "id":"file"+num,
+                 
                  
              }).css({
             	 "height":"40px",
@@ -583,7 +594,7 @@ $(function(){
              let label = $("<label>").attr({
                  'for':'file'+num
              
-             });
+             }).html(<%=pb.getBoardImages().get(0)%>);
              $(".fileNo").attr({
                  "value":num
              })

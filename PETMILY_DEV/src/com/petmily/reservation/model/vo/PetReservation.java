@@ -2,9 +2,10 @@ package com.petmily.reservation.model.vo;
 
 public class PetReservation {
 
-	private String reservationCode;
-	private int petCode;
+	private int reservationCode;
+	private String sitterName;
 	private String petSitterId;
+	private String userId;
 	private int boardNo;
 	private String checkIn;
 	private String checkOut;
@@ -17,16 +18,27 @@ public class PetReservation {
 	private String priceEndDate;
 	private int price;
 	private String resType;
+	private String boardTitle;
+	private int small;
+	private int middle;
+	private int big;
+	private String address;
+	private String comment;
+	private String boardBlind;
+	
 	public PetReservation() {
 		// TODO Auto-generated constructor stub
 	}
-	public PetReservation(String reservationCode, int petCode, String petSitterId, int boardNo, String checkIn,
-			String checkOut, String careType, String petType, int petBath, String petMedication, String petPickup,
-			String plusQuestion, String priceEndDate, int price, String resType) {
+
+	public PetReservation(int reservationCode, String sitterName, String petSitterId, String userId, int boardNo,
+			String checkIn, String checkOut, String careType, String petType, int petBath, String petMedication,
+			String petPickup, String plusQuestion, String priceEndDate, int price, String resType, String boardTitle,
+			int small, int middle, int big, String address, String comment, String boardBlind) {
 		super();
 		this.reservationCode = reservationCode;
-		this.petCode = petCode;
+		this.sitterName = sitterName;
 		this.petSitterId = petSitterId;
+		this.userId = userId;
 		this.boardNo = boardNo;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -39,24 +51,40 @@ public class PetReservation {
 		this.priceEndDate = priceEndDate;
 		this.price = price;
 		this.resType = resType;
+		this.boardTitle = boardTitle;
+		this.small = small;
+		this.middle = middle;
+		this.big = big;
+		this.address = address;
+		this.comment = comment;
+		this.boardBlind = boardBlind;
 	}
-	public String getReservationCode() {
+
+	public String getSitterName() {
+		return sitterName;
+	}
+
+	public void setSitterName(String sitterName) {
+		this.sitterName = sitterName;
+	}
+
+	public int getReservationCode() {
 		return reservationCode;
 	}
-	public void setReservationCode(String reservationCode) {
+	public void setReservationCode(int reservationCode) {
 		this.reservationCode = reservationCode;
-	}
-	public int getPetCode() {
-		return petCode;
-	}
-	public void setPetCode(int petCode) {
-		this.petCode = petCode;
 	}
 	public String getPetSitterId() {
 		return petSitterId;
 	}
 	public void setPetSitterId(String petSitterId) {
 		this.petSitterId = petSitterId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public int getBoardNo() {
 		return boardNo;
@@ -130,13 +158,59 @@ public class PetReservation {
 	public void setResType(String resType) {
 		this.resType = resType;
 	}
+	public String getBoardTitle() {
+		return boardTitle;
+	}
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
+	}
+	public int getSmall() {
+		return small;
+	}
+	public void setSmall(int small) {
+		this.small = small;
+	}
+	public int getMiddle() {
+		return middle;
+	}
+	public void setMiddle(int middle) {
+		this.middle = middle;
+	}
+	public int getBig() {
+		return big;
+	}
+	public void setBig(int big) {
+		this.big = big;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public String getBoardBlind() {
+		return boardBlind;
+	}
+	public void setBoardBlind(String boardBlind) {
+		this.boardBlind = boardBlind;
+	}
 	@Override
 	public String toString() {
-		return "PetReservation [reservationCode=" + reservationCode + ", petCode=" + petCode + ", petSitterId="
-				+ petSitterId + ", boardNo=" + boardNo + ", checkIn=" + checkIn + ", checkOut=" + checkOut
-				+ ", careType=" + careType + ", petType=" + petType + ", petBath=" + petBath + ", petMedication="
-				+ petMedication + ", petPickup=" + petPickup + ", plusQuestion=" + plusQuestion + ", priceEndDate="
-				+ priceEndDate + ", price=" + price + ", resType=" + resType + "]";
+		return "PetReservation [reservationCode=" + reservationCode + ", petSitterId=" + petSitterId + ", userId="
+				+ userId + ", boardNo=" + boardNo + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", careType="
+				+ careType + ", petType=" + petType + ", petBath=" + petBath + ", petMedication=" + petMedication
+				+ ", petPickup=" + petPickup + ", plusQuestion=" + plusQuestion + ", priceEndDate=" + priceEndDate
+				+ ", price=" + price + ", resType=" + resType + ", boardTitle=" + boardTitle + ", small=" + small
+				+ ", middle=" + middle + ", big=" + big + ", address=" + address + ", comment=" + comment
+				+ ", boardBlind=" + boardBlind + "]";
 	}
+	
+	
 	
 }

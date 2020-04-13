@@ -3,15 +3,21 @@
     pageEncoding="UTF-8"%>
      <%@ page import="com.petmily.board.model.vo.PetSitterBoard"%>
      <%
-     PetSitterBoard pb = (PetSitterBoard)request.getAttribute("board");
+     PetSitterBoard pb = null;
      String plus ="";
      String basic ="";
-       for(int i=0;i<pb.getPlus().size();i++) {
-          plus+=pb.getPlus().get(i);
-       }
-       for(int i=0;i<pb.getServiceTypes().size();i++) {
-          basic+=pb.getServiceTypes().get(i);
-       }
+     if(request.getAttribute("board")!=null) {
+     pb = (PetSitterBoard)request.getAttribute("board");
+     for(int i=0;pb.getPlus()!=null&& i<pb.getPlus().size();i++) {
+         plus+=pb.getPlus().get(i);
+      }
+     
+      for(int i=0;pb.getServiceTypes()!=null&& i<pb.getServiceTypes().size();i++) {
+         basic+=pb.getServiceTypes().get(i);
+      }
+     }
+     
+    
        
      %>
 <!DOCTYPE html>
@@ -28,7 +34,7 @@
    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21457534dfe681cc96c51d32694dc5a9&libraries=services"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
-<title>Insert title here</title>
+<title>게시판 상세화면</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/boardWrite.css">
 </head>
 <body>
@@ -47,7 +53,7 @@
         
                             <li class="title">작성글</li>
                             <hr class="hr-line"/>
-                            <li class="content"><a href="<%=request.getContextPath()%>/boardDetail"> - 작성글 보기</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/sitter/Detail"> - 작성글 보기</a></li>
                             <li class="content"><a href=""> - 작성한 비밀후기 보기</a></li>
                             <br/>
                             
@@ -95,8 +101,8 @@
                             <td colspan="1">
                                 <div class="input-group mb-3" style="width: 500px; height: 25px; margin-top: 10px;">
                                     <div class="files">
-                                    	<%for(int i=0;i<pb.getBoardImages().size();i++) { %>
-                                       <img style="letter-spacing:5px;width:50px;height:50px;"src="<%=request.getContextPath() %>/upload/board/<%=pb.getBoardImages().get(i)%>">
+                                    	<%for(int i=0;pb.getBoardImages()!=null&&i<pb.getBoardImages().size();i++) { %>
+                                       <img style="width:50px;height:50px;"src="<%=request.getContextPath() %>/upload/board/<%=pb.getBoardImages().get(i)%>">
                                        
                                        <%} %>
                                     </div>
@@ -202,6 +208,7 @@
                                  </td>
                                  </tr>
                                  </div>
+                                 
                              </table>
                                      </div>                                                                                 
                                           
@@ -214,7 +221,7 @@
                          <div class="row1">
                             <table style="text-align: center; margin-top:0px;">
                                  <tr>
-                                     <td style="width: 50px;">1박</td style="width: 100px;">
+                                     <td style="width: 50px;">1박</td>
                                      <td><input name="sale" style="width: 100px; height: 25px; font-size: 12px;"type="number" id="onecare2" class="form-control onecare2" step="5000" min="5000" max='20000' value="<%=pb.getSalePrice() %>"readonly></td>
                                      <td>할인</td>
                                  </tr>
@@ -403,7 +410,7 @@
                                     <label for="myCheckbox8">집 앞 픽업</label>
                                     <span></span>
                                     <%}else { %>
-                                      <input name="plusOption" " id="myCheckbox8" type="checkbox" value="집앞픽업" disabled>
+                                      <input name="plusOption"id="myCheckbox8" type="checkbox" value="집앞픽업" disabled>
                                     <label for="myCheckbox8">집 앞 픽업</label>
                                     <span></span>
                                     <%} %>
