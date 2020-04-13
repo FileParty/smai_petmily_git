@@ -6,6 +6,8 @@
 	List<Pet> list= (List)request.getAttribute("list");
 
 %>
+
+<%@ include file="/views/common/header.jsp" %>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -252,20 +254,22 @@ label.custom-file-label::after{
         div.allList{
        		height:100%;
             width:100%;
-            border:1px solid red;
             margin-right:auto;
             margin-left:auto;
         }
         div.list{
         	text-align:center;
+        	font-size : 14px;
         	border-radius : 15px;
         	background-color: lightgrey;
-            width: 48%;
-            border:1px solid blue;
-            padding : 10px;
+        	line-height: 10px;
+            width: 47%;
+            padding : 15px;
             height:100%;
             float:left;
-            margin : 5px;
+            margin-left : 15px;
+            margin-bottom : 10px;
+
         }
         .btn-enroll{
         	padding-top:100px;
@@ -318,32 +322,39 @@ label.custom-file-label::after{
                         <img class="top-img" style="width: 100%; margin-top: -230px;" src="https://images.unsplash.com/flagged/photo-1548245643-7b805f2f93d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80">
                     </div>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item">회원 정보</li>
-                        <li class="breadcrumb-item active">회원 정보 수정</li>
+                        <li class="breadcrumb-item">펫 프로필</li>
+                        <li class="breadcrumb-item active">펫 프로필</li>
                     </ul>
                     <!-- 콘텐츠 영역 -->
                     <div class="allList" id="container">
-	               <%-- 	<%if(!list.isEmpty()){
+	                <%if(!list.isEmpty()){
 					for(Pet p : list){%>
 	                    <div class="list">
-	                    <p>No.<%=p.getPetCode()%></p>
-	                    <img src="<%=request.getContextPath()%>/upload/pet/<%=p.getPetImg()%>"/>
-	                    <p><%=p.getPetName()%></p>
+	                   
+	                    <p style="text-align : left; font-size:10px;">No.<%=p.getPetCode()%></p>
+	                    <img src="<%=request.getContextPath()%>/upload/pet/<%=p.getPetImg()%>" width="200px"/>
+	                    <p style="font-weight: 500; margin-top:15px;"><%=p.getPetName()%></p>
 	                    <p><span><%=p.getPetGender()%>/ <%=p.getPetKind()%> / <%=p.getPetWeight()%></span></p>
-	                    <p>생일</p>
+	                    <%String birth =  p.getPetAge();%>
+	                    <%String str = birth.substring(0, 10);%>
+	                    <p>생일: <%=str%></p> 
 	                    <input id="code" type="hidden" value="<%=p.getPetCode()%>"/>
 	                    <button type="button" class="btnDetail" >상세보기</button>
+	                    <br/>
 	                    </div>
 	                    
-	                 <%} }%> --%>
-                </div>
+	                 <%} }%>
                     <div class="btn-enroll">
                         <div>
                             <button
                              onclick="location.replace('<%=request.getContextPath()%>/user/petprofile/upload')"
                              style= "color:white; border: solid 1px black; background-color :black; text-align: center;" type="submit">
-                            <span style="padding-left: 30px;">등록</span></button>
+                            <span>등록</span></button>
                         </div>
+                </div>
+                        <br/>
+                        <br/>
+                        <br/>
                     </div>
                     	
             </div>
@@ -361,7 +372,8 @@ label.custom-file-label::after{
 	<script>
 		$(function(){
 			$(".btnDetail").click((e)=>{
-				var d = {no:$(e.target).prev().val()};
+				var d = {no:$(e.target).prev().val()}
+				console.log(d);
 				$.ajax({
 					url:"<%=request.getContextPath()%>/user/petprofile/detail",
 					type:"get",

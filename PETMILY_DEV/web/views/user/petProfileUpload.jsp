@@ -292,7 +292,7 @@ label.custom-file-label::after{
                         <li class="breadcrumb-item active">회원 정보 수정</li>
                     </ul>
                     <!-- 콘텐츠 영역 -->
-                <form action="<%=request.getContextPath()%>/user/petprofile/upload" method="post" enctype="multipart/form-data">
+                <form action="<%=request.getContextPath()%>/user/petprofile/uploadEnd" method="post" enctype="multipart/form-data">
                     <table style="margin-left: auto; margin-right:auto">
                         <tr>
                             <td class="sub-title" style="width: 150px;">프로필 이미지</td> 
@@ -340,29 +340,29 @@ label.custom-file-label::after{
                         <tr>
                             <td class="sub-title">반려동물 등록 유무</td>
                                 <td class="none" style="width: 200px;">
-                                    <input type="radio" name="enroll" id="gender0" value="내장형" style="vertical-align:0px">
-                                    <label for="gender0" style= "font-size:12px; vertical-align:10px; padding-top: 15px; padding-right: 10px;">내장형 무선식별장치 개체 삽입</label>
+                                    <input type="radio" name="enroll" id="innn" value="내장형" style="vertical-align:0px">
+                                    <label for="innn" style= "font-size:12px; vertical-align:10px; padding-top: 15px; padding-right: 10px;">내장형 무선식별장치 개체 삽입</label>
                                 </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td class="none">
-                                <input type="radio" name="enroll" id="gender1" value="외장형" style="vertical-align:0px">
-                                <label for="gender1" style=" font-size:12px; vertical-align:10px;">외장형 무선식별장치 개체 삽입</label>
+                                <input type="radio" name="enroll" id="out" value="외장형" style="vertical-align:0px">
+                                <label for="out" style=" font-size:12px; vertical-align:10px;">외장형 무선식별장치 개체 삽입</label>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td class="none">
-                                <input type="radio" name="enroll" id="gender1" value="인식표" style="vertical-align:0px">
-                                <label for="gender1" style=" font-size:12px; vertical-align:10px;">등록인식표 부착</label>
+                                <input type="radio" name="enroll" id="ident" value="인식표" style="vertical-align:0px">
+                                <label for="ident" style=" font-size:12px; vertical-align:10px;">등록인식표 부착</label>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td class="none">
-                                <input type="radio" name="enroll" id="gender1" value="하지않음" style="vertical-align:0px">
-                                <label for="gender1" style=" font-size:12px; vertical-align:10px;">등록하지 않음</label>
+                                <input type="radio" name="enroll" id="non" value="하지않음" style="vertical-align:0px">
+                                <label for="non" style=" font-size:12px; vertical-align:10px;">등록하지 않음</label>
                             </td>
                         </tr>
                         <tr>

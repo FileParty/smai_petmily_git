@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List,com.petmily.pet.model.vo.Pet" %>
 <%
-	List<Pet> list= (List)request.getAttribute("list");
-
+	Pet p= (Pet)request.getAttribute("p");
+	int no = Integer.parseInt(request.getParameter("no"));
 %>
     
 <!DOCTYPE html>
@@ -175,6 +175,13 @@
         border-bottom: 1px solid rgb(201, 201, 201);
         line-height: 40px;
     }
+    .sub-content{
+        padding-left: 20px;
+        font-size: 13px;
+        font-weight: 400;
+        border-bottom: 1px solid rgb(201, 201, 201);
+        line-height: 40px;
+    }
     .none{
         padding-left: 30px;
         width: 300px;
@@ -254,57 +261,24 @@ label.custom-file-label::after{
         <div class="container">
             <div class="row">
                 <!-- 메뉴 영역 -->
-                <div class="col-2 menu">
-                    <div id="menu">
-                        <ul type="none">
-                            <li class="title">회원정보</li>
-                            <hr class="hr-line"/>
-                            <li class="content"><a href=""> - 회원정보 수정</a></li>
-                            <li class="content"><a href=""> - 회원 탈퇴</a></li>
-                            <li class="content"><a href=""> - 북마크</a></li>
-                            <li class="content"><a href=""> - 작성 후기</a></li>
-                            <br/>
-                            
-                            <li class="title">펫 프로필</li>
-                            <hr class="hr-line"/>
-                            <li class="content"><a href=""> - 펫 프로필</a></li>
-                            <br/>
-                            
-                            <li class="title">예약</li>
-                            <hr class="hr-line"/>
-                            <li class="content"><a href=""> - 요청한 예약</a></li>
-                            <li class="content"><a href=""> - 진행중인 예약</a></li>
-                            <li class="content"><a href=""> - 종료된 예약</a></li>
-                            <li class="content"><a href=""> - 채팅</a></li>
-                            <br/>
-                            
-                            <li class="title">결제</li>
-                            <hr class="hr-line"/>
-                            <li class="content"><a href=""> - 결제 내역</a></li>
-                            <li class="content"><a href=""> - 추가 요금 내역</a></li>
-                            <br/>
-                            
-                        </ul>
-                    </div>
-                </div>
+
                 <div class="vl"></div>
                 <div class="col-9" style="padding:0;">
-                    <div class="row top-div" style="height: 200px;overflow: hidden;">
-                        <img class="top-img" style="width: 100%; margin-top: -230px;" src="https://images.unsplash.com/flagged/photo-1548245643-7b805f2f93d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80">
-                    </div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item">회원 정보</li>
-                        <li class="breadcrumb-item active">회원 정보 수정</li>
-                    </ul>
+              
                     <!-- 콘텐츠 영역 -->
-                <form action="<%=request.getContextPath()%>/user/petprofile/upload?userId=sebin" method="post" enctype="multipart/form-data">
+                <form action="<%=request.getContextPath()%>/user/petprofile/edit" onsubmit="file();" method="post" enctype="multipart/form-data">
                     <table style="margin-left: auto; margin-right:auto">
                         <tr>
-                            <td class="sub-title" style="width: 150px;">프로필 이미지</td> 
+                            <td class="sub-title" style="width: 150px;">프로필 이미지</td>
+                            <td class="sub-content"><%=p.getPetImg()%></td>
                         </tr>
+                
                         <tr>
                             <td></td>
-                            <td class="none" style="line-height: 5px; font-size: 10px; width: 200px;"><input type="file" name="upload" required/></td>
+                            
+                            <td class="none" style="line-height: 5px; padding-top:5px; font-size: 10px; width: 200px;">
+                            <input id="upload" type="file" name="upload"/></td>
+                          
                         </tr>
                         <tr>
                             <td></td>
@@ -312,190 +286,463 @@ label.custom-file-label::after{
                         </tr>
                         <tr>
                             <td class="sub-title">이름</td>
-                            <td class="none"><input type="text" name="pname" placeholder="이름을 입력하세요." style="width: 150px;" required></td>
+                            <td class="none"><input type="text" name="pname" value="<%=p.getPetName() %>" placeholder="이름을 입력하세요." style="width: 150px;" required></td>
+                        	
                         </tr>
                         <tr>
                             <td class="sub-title">성별</td>
                             <td class="none" style="line-height: 40px;">
-                                <input type="radio" name="gender" id="gender0" value="수" style="vertical-align:0px" required>
+                   		<input type="hidden" name="no" value="<%=no%>"/>
+  
+                            <%if(p.getPetGender().equals(String.valueOf("수"))){ %>
+            
+                                <input type="radio" name="gender" id="gender0" value="수" style="vertical-align:0px" checked required>
 						        <label for="gender0" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">남</label>
 						        <input type="radio" name="gender" id="gender1" value="암" style="vertical-align:0px"required >
 						        <label for="gender1" style=" font-size:12px; vertical-align:10px;">여</label>
+						    <%}else{ %>
+
+						   		<input type="radio" name="gender" id="gender0" value="수" style="vertical-align:0px" required>
+						        <label for="gender0" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">남</label>
+						        <input type="radio" name="gender" id="gender1" value="암" style="vertical-align:0px"required checked >
+						        <label for="gender1" style=" font-size:12px; vertical-align:10px;">여</label>
+						    <%} %>
                             </td>
                         </tr>
                         <tr>
                             <td class="sub-title">품종</td>
-                            <td class="none"><input type="text" name="ptype" style="width: 150px;" placeholder="품종을 입력하세요." required></td>
+                            <td class="none"><input type="text" name="ptype" style="width: 150px;" value="<%=p.getPetKind()%>" placeholder="품종을 입력하세요." required></td>
                         </tr>                 
                         <tr>
                             <td class="sub-title">생년월일</td>
-                            <td class="none"><input type="date" id="pday" style="width: 150px;" name="pday" min="1900-01-01" max="<%=System.currentTimeMillis() %>" required></td>
+                            <%String birth =  p.getPetAge();%>
+	                    	<%String str = birth.substring(0, 10);%>
+                            <td class="none"><input type="date" id="pday" style="width: 150px;" name="pday" value="<%=str%>" min="1900-01-01" max="<%=System.currentTimeMillis() %>" required></td>
                         </tr>
                         <tr>
                             <td class="sub-title">무게</td>
                             <td class="none">
                                 <select name="weight" aria-placeholder="무게" style="width: 150px; font-size: 12px;" required>
-					     
-                                    <option value="소형견">7kg 미만</option>
-                                    <option value="중형견">7kg-14kg</option>
-                                    <option value="대형견">15kg 이상</option>
+					     		<%if(p.getPetWeight().equals("소형")) {%>
+                                    <option value="소형" selected>7kg 미만</option>
+                                    <option value="중형">7kg-14kg</option>
+                                    <option value="대형">15kg 이상</option>
+                                <%} else if(p.getPetWeight().equals("중형")) {%>
+                                	<option value="소형">7kg 미만</option>
+                                    <option value="중형" selected>7kg-14kg</option>
+                                    <option value="대형">15kg 이상</option>
+                                <%} else{ %>
+                                	<option value="소형">7kg 미만</option>
+                                    <option value="중형">7kg-14kg</option>
+                                    <option value="대형" selected>15kg 이상</option>
+                                <%} %>
                                 </select>
                             </td>
                         </tr>
+                        <%if(p.getRegistration().equals("내장형")) {%>
                         <tr>
                             <td class="sub-title">반려동물 등록 유무</td>
                                 <td class="none" style="width: 200px;">
-                                    <input type="radio" name="enroll" id="gender0" value="내장형" style="vertical-align:0px">
-                                    <label for="gender0" style= "font-size:12px; vertical-align:10px; padding-top: 15px; padding-right: 10px;">내장형 무선식별장치 개체 삽입</label>
+                                    <input type="radio" name="enroll" id="innn" value="내장형" style="vertical-align:0px" checked>
+                                    <label for="innn" style= "font-size:12px; vertical-align:10px; padding-top: 15px; padding-right: 10px;">내장형 무선식별장치 개체 삽입</label>
                                 </td>
                         </tr>
                         <tr>
                             <td></td>
+                        
                             <td class="none">
-                                <input type="radio" name="enroll" id="gender1" value="외장형" style="vertical-align:0px">
-                                <label for="gender1" style=" font-size:12px; vertical-align:10px;">외장형 무선식별장치 개체 삽입</label>
+                                <input type="radio" name="enroll" id="out" value="외장형" style="vertical-align:0px">
+                                <label for="out" style=" font-size:12px; vertical-align:10px;">외장형 무선식별장치 개체 삽입</label>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td class="none">
-                                <input type="radio" name="enroll" id="gender1" value="인식표" style="vertical-align:0px">
-                                <label for="gender1" style=" font-size:12px; vertical-align:10px;">등록인식표 부착</label>
+                                <input type="radio" name="enroll" id="ident" value="인식표" style="vertical-align:0px">
+                                <label for="ident" style=" font-size:12px; vertical-align:10px;">등록인식표 부착</label>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td class="none">
-                                <input type="radio" name="enroll" id="gender1" value="하지않음" style="vertical-align:0px">
-                                <label for="gender1" style=" font-size:12px; vertical-align:10px;">등록하지 않음</label>
+                                <input type="radio" name="enroll" id="non" value="하지않음" style="vertical-align:0px">
+                                <label for="non" style=" font-size:12px; vertical-align:10px;">등록하지 않음</label>
                             </td>
                         </tr>
+                        <%}else if(p.getRegistration().equals("외장형")) {%>
+                                                <tr>
+                        <tr>
+                            <td class="sub-title">반려동물 등록 유무</td>
+                                <td class="none" style="width: 200px;">
+                                    <input type="radio" name="enroll" id="innn" value="내장형" style="vertical-align:0px">
+                                    <label for="innn" style= "font-size:12px; vertical-align:10px; padding-top: 15px; padding-right: 10px;">내장형 무선식별장치 개체 삽입</label>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        
+                            <td class="none">
+                                <input type="radio" name="enroll" id="out" value="외장형" style="vertical-align:0px" checked>
+                                <label for="out" style=" font-size:12px; vertical-align:10px;">외장형 무선식별장치 개체 삽입</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="none">
+                                <input type="radio" name="enroll" id="ident" value="인식표" style="vertical-align:0px">
+                                <label for="ident" style=" font-size:12px; vertical-align:10px;">등록인식표 부착</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="none">
+                                <input type="radio" name="enroll" id="non" value="하지않음" style="vertical-align:0px">
+                                <label for="non" style=" font-size:12px; vertical-align:10px;">등록하지 않음</label>
+                        <%}else if(p.getRegistration().equals("인식표")){ %>
+                        
+                        <tr>
+                            <td class="sub-title">반려동물 등록 유무</td>
+                                <td class="none" style="width: 200px;">
+                                    <input type="radio" name="enroll" id="innn" value="내장형" style="vertical-align:0px">
+                                    <label for="innn" style= "font-size:12px; vertical-align:10px; padding-top: 15px; padding-right: 10px;">내장형 무선식별장치 개체 삽입</label>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        
+                            <td class="none">
+                                <input type="radio" name="enroll" id="out" value="외장형" style="vertical-align:0px">
+                                <label for="out" style=" font-size:12px; vertical-align:10px;">외장형 무선식별장치 개체 삽입</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="none">
+                                <input type="radio" name="enroll" id="ident" value="인식표" style="vertical-align:0px" checked>
+                                <label for="ident" style=" font-size:12px; vertical-align:10px;">등록인식표 부착</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="none">
+                                <input type="radio" name="enroll" id="non" value="하지않음" style="vertical-align:0px">
+                                <label for="non" style=" font-size:12px; vertical-align:10px;">등록하지 않음</label>
+                        
+                        <%}else if(p.getRegistration().equals("하지않음")){ %>
+                        
+                        <tr>
+                            <td class="sub-title">반려동물 등록 유무</td>
+                                <td class="none" style="width: 200px;">
+                                    <input type="radio" name="enroll" id="innn" value="내장형" style="vertical-align:0px">
+                                    <label for="innn" style= "font-size:12px; vertical-align:10px; padding-top: 15px; padding-right: 10px;">내장형 무선식별장치 개체 삽입</label>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        
+                            <td class="none">
+                                <input type="radio" name="enroll" id="out" value="외장형" style="vertical-align:0px">
+                                <label for="out" style=" font-size:12px; vertical-align:10px;">외장형 무선식별장치 개체 삽입</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="none">
+                                <input type="radio" name="enroll" id="ident" value="인식표" style="vertical-align:0px">
+                                <label for="ident" style=" font-size:12px; vertical-align:10px;">등록인식표 부착</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="none">
+                                <input type="radio" name="enroll" id="non" value="하지않음" style="vertical-align:0px" checked>
+                                <label for="non" style=" font-size:12px; vertical-align:10px;">등록하지 않음</label>
+                        
+                        <%} %>
+                        
                         <tr>
                             <td class="sub-title">다른 개와 친화적인가요?</td>
                             <td class="yes">
-                                <input type="radio" name="friendly" id="y" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getPetAffinity().equals("Y")){ %>
+                                <input type="radio" name="friendly" id="y" value="Y" style="vertical-align:0px" required checked>
 						        <label for="y" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
 						        <input type="radio" name="friendly" id="n" value="N" style="vertical-align:0px"required >
                                 <label for="n" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
                                 <input type="radio" name="friendly" id="d" style="vertical-align:0px;"required >
 						        <label for="d" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} else if(p.getPetAffinity().equals("N")) {%>
+						    	<input type="radio" name="friendly" id="y" value="Y" style="vertical-align:0px" required>
+						        <label for="y" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="friendly" id="n" value="N" style="vertical-align:0px"required checked>
+                                <label for="n" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="friendly" id="d" style="vertical-align:0px;"required >
+						        <label for="d" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%}else if(p.getPetAffinity()==null) {%>
+						    	<input type="radio" name="friendly" id="y" value="Y" style="vertical-align:0px" required>
+						        <label for="y" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="friendly" id="n" value="N" style="vertical-align:0px"required >
+                                <label for="n" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="friendly" id="d" style="vertical-align:0px;"required checked>
+						        <label for="d" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} %>
                             </td>
 
                         </tr>
                         <tr>
                             <td class="sub-title">중성화 수술을 했나요?</td>
                             <td class="yes">
-                                <input type="radio" name="neutral" id="ny" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getPetNeutralization().equals("Y")){ %>
+                                <input type="radio" name="neutral" id="ny" value="Y" style="vertical-align:0px" required checked>
 						        <label for="ny" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
 						        <input type="radio" name="neutral" id="nn" value="N" style="vertical-align:0px"required >
                                 <label for="nn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
                                 <input type="radio" name="neutral" id="nd" style="vertical-align:0px;"required >
 						        <label for="nd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} else if(p.getPetNeutralization().equals("N")) {%>
+						        <input type="radio" name="neutral" id="ny" value="Y" style="vertical-align:0px" required>
+						        <label for="ny" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="neutral" id="nn" value="N" style="vertical-align:0px"required checked>
+                                <label for="nn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="neutral" id="nd" style="vertical-align:0px;"required >
+						        <label for="nd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%}else if(p.getPetNeutralization()==null) {%>
+						        <input type="radio" name="neutral" id="ny" value="Y" style="vertical-align:0px" required>
+						        <label for="ny" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="neutral" id="nn" value="N" style="vertical-align:0px"required >
+                                <label for="nn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="neutral" id="nd" style="vertical-align:0px;"required checked>
+						        <label for="nd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    
+						    <%} %>
                             </td>
 
                         </tr>
                         <tr>
                             <td class="sub-title">지병이 있나요?</td>
                             <td class="yes">
-                                <input type="radio" name="ill" id="iy" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getPetDisease().equals("Y")){ %>
+                                <input type="radio" name="ill" id="iy" value="Y" style="vertical-align:0px" required checked>
 						        <label for="iy" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
 						        <input type="radio" name="ill" id="in" value="N" style="vertical-align:0px"required >
                                 <label for="in" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
                                 <input type="radio" name="ill" id="id" style="vertical-align:0px;"required >
 						        <label for="id" style=" font-size:12px; vertical-align:10px;">모름</label>
+						     <%} else if(p.getPetDisease().equals("N")) {%>
+                                <input type="radio" name="ill" id="iy" value="Y" style="vertical-align:0px" required>
+						        <label for="iy" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="ill" id="in" value="N" style="vertical-align:0px"required checked>
+                                <label for="in" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="ill" id="id" style="vertical-align:0px;"required >
+						        <label for="id" style=" font-size:12px; vertical-align:10px;">모름</label>
+						     <%}else if(p.getPetDisease()==null) {%>
+                                <input type="radio" name="ill" id="iy" value="Y" style="vertical-align:0px" required>
+						        <label for="iy" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="ill" id="in" value="N" style="vertical-align:0px"required >
+                                <label for="in" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="ill" id="id" style="vertical-align:0px;"required checked>
+						        <label for="id" style=" font-size:12px; vertical-align:10px;">모름</label>
+						     <%} %>
                             </td>
 
                         </tr>
                         <tr>
+                          
                             
-                            <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="illexplanation" cols="80" rows="4"
-                                placeholder="지병 및 다친 적이 있는지 자세하게 적어주세요." ></textarea></td>
+                                <%if(p.getPetDiseaseTxt()!=null){%>
+                                <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="illexplanation" cols="80" rows="4"
+                                placeholder="지병 및 다친 적이 있는지 자세하게 적어주세요."><%=p.getPetDiseaseTxt()%></textarea></td>
+                                <%}else{%>
+                                <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="illexplanation" cols="80" rows="4"
+                                placeholder="지병 및 다친 적이 있는지 자세하게 적어주세요."></textarea></td>
+                                <%} %>
                         </tr>
 
                         <tr>
                             <td class="sub-title">분리불안이 있나요?</td>
                             <td class="yes">
-                                <input type="radio" name="anxiety" id="ay" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getPetSeparation().equals("Y")){ %>
+                                <input type="radio" name="anxiety" id="ay" value="Y" style="vertical-align:0px" required checked>
 						        <label for="ay" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
 						        <input type="radio" name="anxiety" id="an" value="N" style="vertical-align:0px"required >
                                 <label for="an" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
                                 <input type="radio" name="anxiety" id="ad" style="vertical-align:0px;"required >
 						        <label for="ad" style=" font-size:12px; vertical-align:10px;">모름</label>
+						     <%} else if(p.getPetSeparation().equals("N")) {%>
+                                <input type="radio" name="anxiety" id="ay" value="Y" style="vertical-align:0px" required>
+						        <label for="ay" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="anxiety" id="an" value="N" style="vertical-align:0px"required checked>
+                                <label for="an" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="anxiety" id="ad" style="vertical-align:0px;"required >
+						        <label for="ad" style=" font-size:12px; vertical-align:10px;">모름</label>
+						     <%}else if(p.getPetSeparation()==null) {%>
+                                <input type="radio" name="anxiety" id="ay" value="Y" style="vertical-align:0px" required>
+						        <label for="ay" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="anxiety" id="an" value="N" style="vertical-align:0px"required >
+                                <label for="an" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="anxiety" id="ad" style="vertical-align:0px;"required checked>
+						        <label for="ad" style=" font-size:12px; vertical-align:10px;">모름</label>
+						     <%} %>
                             </td>
 
                         </tr>
                         <tr>
-                            
-                            <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="aexplanation" cols="80" rows="4"
-                                placeholder="분리불안 증상을 보일 경우 어떻게 대처하시는지 적어주세요." ></textarea></td>
+
+                                <%if(p.getPetSeparationTxt()!=null){%>
+                                	<td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="aexplanation" cols="80" rows="4"
+                               		 placeholder="분리불안 증상을 보일 경우 어떻게 대처하시는지 적어주세요."><%= p.getPetSeparationTxt()%></textarea></td>
+                                <%}else{%>
+                                	<td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="aexplanation" cols="80" rows="4"
+                                	placeholder="분리불안 증상을 보일 경우 어떻게 대처하시는지 적어주세요."></textarea></td>
+                                <%} %>
+                                
                         </tr>
 
                         <tr>
                             <td class="sub-title">대소변을 잘 가리나요?</td>
                             <td class="yes">
-                                <input type="radio" name="menstruation" id="my" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getPetUrine().equals("Y")){ %>
+                                <input type="radio" name="menstruation" id="my" value="Y" style="vertical-align:0px" required checked>
 						        <label for="my" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
 						        <input type="radio" name="menstruation" id="mn" value="N" style="vertical-align:0px"required >
                                 <label for="mn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
                                 <input type="radio" name="menstruation" id="md" style="vertical-align:0px;"required >
 						        <label for="md" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} else if(p.getPetUrine().equals("N")) {%>
+                                <input type="radio" name="menstruation" id="my" value="Y" style="vertical-align:0px" required>
+						        <label for="my" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="menstruation" id="mn" value="N" style="vertical-align:0px"required checked>
+                                <label for="mn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="menstruation" id="md" style="vertical-align:0px;"required >
+						        <label for="md" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%}else if(p.getPetUrine()==null) {%>
+                                <input type="radio" name="menstruation" id="my" value="Y" style="vertical-align:0px" required>
+						        <label for="my" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="menstruation" id="mn" value="N" style="vertical-align:0px"required >
+                                <label for="mn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="menstruation" id="md" style="vertical-align:0px;"required checked>
+						        <label for="md" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} %>
                             </td>
 
                         </tr>
                         <tr>
-                            
+                            <%if(p.getPetUrineTxt()!=null){ %>
                             <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="mexplanation" cols="80" rows="4"
-                                placeholder="주로 어디에 대소변을 하는지 적어주세요." ></textarea></td>
+                                placeholder="주로 어디에 대소변을 하는지 적어주세요."><%=p.getPetUrineTxt()%></textarea></td>
+                            <%}else{ %>
+                            <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="mexplanation" cols="80" rows="4"
+                                placeholder="주로 어디에 대소변을 하는지 적어주세요."></textarea></td>
+                            <%} %>
                         </tr>
 
                         <tr>
                             <td class="sub-title">실내 마킹(영역표시)를 하나요?</td>
                             <td class="yes">
-                                <input type="radio" name="mark" id="mmy" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getPetIndoor().equals("Y")){ %>
+                                <input type="radio" name="mark" id="mmy" value="Y" style="vertical-align:0px" required checked>
 						        <label for="mmy" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
 						        <input type="radio" name="mark" id="mmn" value="N" style="vertical-align:0px"required >
                                 <label for="mmn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
                                 <input type="radio" name="mark" id="mmd" style="vertical-align:0px;"required >
 						        <label for="mmd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} else if(p.getPetIndoor().equals("N")) {%>
+                                <input type="radio" name="mark" id="mmy" value="Y" style="vertical-align:0px" required>
+						        <label for="mmy" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="mark" id="mmn" value="N" style="vertical-align:0px"required checked>
+                                <label for="mmn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="mark" id="mmd" style="vertical-align:0px;"required >
+                                <label for="mmd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%}else if(p.getPetIndoor()==null) {%>
+                                <input type="radio" name="mark" id="mmy" value="Y" style="vertical-align:0px" required>
+						        <label for="mmy" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="mark" id="mmn" value="N" style="vertical-align:0px"required >
+                                <label for="mmn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="mark" id="mmd" style="vertical-align:0px;"required checked>
+                                <label for="mmd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} %>
                             </td>
 
                         </tr>
                         <tr>
-                            
+                        <%if(p.getPetIndoorTxt()!=null){%>
                             <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="mmexplanation" cols="80" rows="4"
+                                placeholder="주로 어디에 마킹을 하는지 적어주세요." ><%=p.getPetIndoorTxt()%></textarea></td>
+                        <%}else{ %>
+                        	<td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="mmexplanation" cols="80" rows="4"
                                 placeholder="주로 어디에 마킹을 하는지 적어주세요." ></textarea></td>
+                        <%} %>
                         </tr>
 
                         <tr>
                             <td class="sub-title">반려견이 잘 짖는 편인가요?</td>
                             <td class="yes">
-                                <input type="radio" name="bark" id="by" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getPetHowling().equals("Y")){ %>
+                                <input type="radio" name="bark" id="by" value="Y" style="vertical-align:0px" required checked>
 						        <label for="by" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
 						        <input type="radio" name="bark" id="bn" value="N" style="vertical-align:0px"required >
                                 <label for="bn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
                                 <input type="radio" name="bark" id="bd" style="vertical-align:0px;"required >
 						        <label for="bd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} else if(p.getPetHowling().equals("N")) {%>
+                               <input type="radio" name="bark" id="by" value="Y" style="vertical-align:0px" required>
+						        <label for="by" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="bark" id="bn" value="N" style="vertical-align:0px"required checked>
+                                <label for="bn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="bark" id="bd" style="vertical-align:0px;"required >
+						        <label for="bd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%}else if(p.getPetHowling()==null) {%>
+                               <input type="radio" name="bark" id="by" value="Y" style="vertical-align:0px" required>
+						        <label for="by" style= "font-size:12px; vertical-align:10px; padding-right: 10px;">예</label>
+						        <input type="radio" name="bark" id="bn" value="N" style="vertical-align:0px"required >
+                                <label for="bn" style=" font-size:12px; vertical-align:10px; padding-right: 10px;">아니오</label>
+                                <input type="radio" name="bark" id="bd" style="vertical-align:0px;"required checked>
+						        <label for="bd" style=" font-size:12px; vertical-align:10px;">모름</label>
+						    <%} %>
                             </td>
+
 
                         </tr>
                         <tr>
-                            
+                         <%if(p.getPetHowlingTxt()!=null){%>
                             <td colspan="2"><textarea style="font-size: 12px; padding:5px; margin-top: 5px;" name="bexplanation" cols="80" rows="4"
                                 placeholder="주로 어떤 상황에서 짖는지,짖을 경우 따로 주의를 주는 행동이 있는지 적어주세요." ></textarea></td>
+                         <%}else{ %>
+                         <%} %>
                         </tr>
 
                         <tr>
                             <td colspan="2" class="sub-title">(심장사상충)약을 복용하였습니까? (월 1회/미 복용시 산책 금지)</td>
                         </tr>
                         <tr>
+                            <%if(p.getHeartDisease().equals("Y")){ %>
                             <td class="none">
-                                <input type="radio" name="drug" id="dy" value="Y" style="vertical-align:0px" required>
+                                <input type="radio" name="drug" id="dy" value="Y" style="vertical-align:0px" required checked>
 						        <label for="dy" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
 						        <input type="radio" name="drug" id="dn" value="N" style="vertical-align:0px"required >
                                 <label for="dn" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
                                 <input type="radio" name="drug" id="dd" style="vertical-align:0px;"required >
 						        <label for="dd" style=" font-size:12px; vertical-align:10px;">모름</label>
                             </td>
+                            <%} else if(p.getHeartDisease().equals("N")) {%>
+                            <td class="none">
+                                <input type="radio" name="drug" id="dy" value="Y" style="vertical-align:0px" required>
+						        <label for="dy" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="drug" id="dn" value="N" style="vertical-align:0px"required checked>
+                                <label for="dn" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="drug" id="dd" style="vertical-align:0px;"required >
+						        <label for="dd" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%}else if(p.getHeartDisease()==null) {%>
+                            <td class="none">
+                                <input type="radio" name="drug" id="dy" value="Y" style="vertical-align:0px" required>
+						        <label for="dy" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="drug" id="dn" value="N" style="vertical-align:0px"required >
+                                <label for="dn" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="drug" id="dd" style="vertical-align:0px;"required checked>
+						        <label for="dd" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%} %>
+                            
                         </tr>
                         <tr>
                             <td colspan="2" style="line-height: 40px;"><p style="font-size: 12px; font-weight: 500; text-align: center; margin: 0;">* 하기 예방 접종 확인 사항 중 한가지라도 접종하지 않은 경우 산책이 금지됩니다.</p></td>
@@ -505,42 +752,105 @@ label.custom-file-label::after{
                             <td colspan="2" class="sub-title">(종합 7종 백신)접종을 하였습니까? (연 1회)</td>
                         </tr>
                         <tr>
+                            <%if(p.getVaccine().equals("Y")){ %>
                             <td class="none">
-                                <input type="radio" name="inoculation" id="1y" value="Y" style="vertical-align:0px" required>
+                                <input type="radio" name="inoculation" id="1y" value="Y" style="vertical-align:0px" required checked>
 						        <label for="1y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
 						        <input type="radio" name="inoculation" id="1n" value="N" style="vertical-align:0px"required >
                                 <label for="1n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
                                 <input type="radio" name="inoculation" id="1d" style="vertical-align:0px;"required >
 						        <label for="1d" style=" font-size:12px; vertical-align:10px;">모름</label>
                             </td>
+                            <%} else if(p.getVaccine().equals("N")) {%>
+                            <td class="none">
+                                <input type="radio" name="inoculation" id="1y" value="Y" style="vertical-align:0px" required>
+						        <label for="1y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="inoculation" id="1n" value="N" style="vertical-align:0px"required checked>
+                                <label for="1n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="inoculation" id="1d" style="vertical-align:0px;"required >
+						        <label for="1d" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%}else if(p.getVaccine()==null) {%>
+                            <td class="none">
+                                <input type="radio" name="inoculation" id="1y" value="Y" style="vertical-align:0px" required>
+						        <label for="1y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="inoculation" id="1n" value="N" style="vertical-align:0px"required >
+                                <label for="1n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="inoculation" id="1d" style="vertical-align:0px;"required checked>
+						        <label for="1d" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%} %>
+                            
                         </tr>
 
                         <tr >
                             <td colspan="2" class="sub-title">(코로나 장염)접종을 하였습니까? (연 1회)</td>
                         </tr>
                         <tr>
+                            <%if(p.getCorona().equals("Y")){ %>
                             <td class="none">
-                                <input type="radio" name="inoculation2" id="2y" value="Y" style="vertical-align:0px" required>
+                                <input type="radio" name="inoculation2" id="2y" value="Y" style="vertical-align:0px" required checked>
 						        <label for="2y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
 						        <input type="radio" name="inoculation2" id="2n" value="N" style="vertical-align:0px"required >
                                 <label for="2n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
                                 <input type="radio" name="inoculation2" id="2d" style="vertical-align:0px;"required >
 						        <label for="2d" style=" font-size:12px; vertical-align:10px;">모름</label>
                             </td>
+                            <%} else if(p.getCorona().equals("N")) {%>
+                            <td class="none">
+                                <input type="radio" name="inoculation2" id="2y" value="Y" style="vertical-align:0px" required>
+						        <label for="2y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="inoculation2" id="2n" value="N" style="vertical-align:0px"required checked>
+                                <label for="2n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="inoculation2" id="2d" style="vertical-align:0px;"required >
+						        <label for="2d" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%}else if(p.getCorona()==null) {%>
+                            <td class="none">
+                                <input type="radio" name="inoculation2" id="2y" value="Y" style="vertical-align:0px" required>
+						        <label for="2y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="inoculation2" id="2n" value="N" style="vertical-align:0px"required >
+                                <label for="2n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="inoculation2" id="2d" style="vertical-align:0px;"required checked>
+						        <label for="2d" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%} %>
+                            
                         </tr>
 
                         <tr >
                             <td colspan="2" class="sub-title">(켄넬코프)접종을 하였습니까? (연 1회)</td>
                         </tr>
                         <tr>
-                            <td class="none">
-                                <input type="radio" name="inoculation3" id="3y" value="Y" style="vertical-align:0px" required>
+                            <%if(p.getKennel().equals("Y")){ %>
+                                                        <td class="none">
+                                <input type="radio" name="inoculation3" id="3y" value="Y" style="vertical-align:0px" required checked>
 						        <label for="3y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
 						        <input type="radio" name="inoculation3" id="3n" value="N" style="vertical-align:0px"required >
                                 <label for="3n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
                                 <input type="radio" name="inoculation3" id="3d" style="vertical-align:0px;"required >
 						        <label for="3d" style=" font-size:12px; vertical-align:10px;">모름</label>
                             </td>
+                            <%} else if(p.getKennel().equals("N")) {%>
+                                                        <td class="none">
+                                <input type="radio" name="inoculation3" id="3y" value="Y" style="vertical-align:0px" required>
+						        <label for="3y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="inoculation3" id="3n" value="N" style="vertical-align:0px"required checked>
+                                <label for="3n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="inoculation3" id="3d" style="vertical-align:0px;"required >
+						        <label for="3d" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%}else if(p.getKennel()==null) {%>
+                                                        <td class="none">
+                                <input type="radio" name="inoculation3" id="3y" value="Y" style="vertical-align:0px" required>
+						        <label for="3y" style= "font-size:12px; vertical-align:10px; padding-right: 30px;">예</label>
+						        <input type="radio" name="inoculation3" id="3n" value="N" style="vertical-align:0px"required >
+                                <label for="3n" style=" font-size:12px; vertical-align:10px; padding-right: 30px;">아니오</label>
+                                <input type="radio" name="inoculation3" id="3d" style="vertical-align:0px;"required checked>
+						        <label for="3d" style=" font-size:12px; vertical-align:10px;">모름</label>
+                            </td>
+                            <%} %>
+
                         </tr>
                     <br/>
                         <tr style="border-top: 1px solid rgb(179, 179, 179);">
@@ -550,14 +860,16 @@ label.custom-file-label::after{
                         </tr>
 
                         <tr style="line-height: 40px;">
-                            <td style="padding-left: 10px;"><input  type="text" placeholder="병원명" name="hospital"/></td style="padding-left: 10px;">
+
+                            <td style="padding-left: 10px;"><input  type="text" placeholder="병원명" name="hospital" value="<%=p.getHospitalName()%>"/></td style="padding-left: 10px;">
+
                         </tr>
                         <tr style="line-height: 40px;">
-                            <td style="padding-left: 10px;"><input  type="text" placeholder="번호" name="hnum"/></td style="padding-left: 10px;">
+                            <td style="padding-left: 10px;"><input  type="text" placeholder="번호" name="hnum" value="<%=p.getHospitalPhone()%>"/></td style="padding-left: 10px;">
                         </tr>
                         <tr >
                             <td colspan="2" style="padding-left: 10px; padding-top: 10px; padding-bottom: 5px;">
-                                <input style="line-height: 40px;"  type="text" id="postNum" name="postNum" placeholder="우편번호">&nbsp;&nbsp;&nbsp;
+                                <input style="line-height: 40px;"  type="text" id="postNum" name="postNum" placeholder="우편번호" value="<%=p.getHospitalZip()%>">&nbsp;&nbsp;&nbsp;
                                 <button type="button" id="check-btn" onclick="zip_code();">우편번호 찾기</button>
                                 
                             </td>
@@ -566,34 +878,42 @@ label.custom-file-label::after{
                         <tr style="line-height: 40px;">
                     
                             <td style="padding-left: 10px;">
-                                <input style="width: 250px;" id="streetAddress" name="address" type="text" placeholder="도로명주소">
+                                <input style="width: 250px;" id="streetAddress" name="address" type="text" placeholder="도로명주소"value="<%=p.getHospitalAddress()%>">
                             </td>
                         </tr>
 
                         <tr style="line-height: 40px;">
                    
                             <td style="padding-left: 10px;">
-                                <input id="addressInput"  style="width: 250px;"  name="detail" type="text" placeholder="상세주소 입력">
+                                <input id="addressInput"  style="width: 250px;"  name="detail" type="text" placeholder="상세주소 입력" value="<%=p.getDetail()%>">
                                </td>
                         </tr>
                         </table>
+                        
 
-                        <br/>
-                        <br/>
-                        <br/>
-                        <div>
-                        <button style="display:flex; margin-right: auto; margin-left: auto; color:white; border: solid 1px black; background-color :black; text-align: center;" type="submit">
-                            <span style="padding-left: 30px;">등록</span></button>
-                        </div>
+         
+	                        <div class="btn-enroll">
+	                        <div>
+	                        	<button
+	                             onclick="location.replace('<%=request.getContextPath()%>/user/petprofile')"
+	                             style= "color:white; border: solid 1px darkgrey; background-color :darkgrey; margin-right:5px; text-align: center;" type="button" >
+	                            <span>목록</span></button>
+	                            
+	                            <button
+	                             style= "color:white; border: solid 1px black; background-color :black; text-align: center;" type="submit">
+	                            <span>수정</span></button>
+	                            
+	                        </div>
+	                		</div>
                         <br/>
                         <br/>
                         <br/>
 
+       				 </form>
                     </div>
                 </div>
             </div>
-        </form>
-        </div>
+
     </section>
 
     <!-- Optional JavaScript -->
@@ -605,6 +925,12 @@ label.custom-file-label::after{
 </body>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
+function file(){
+	if($(“input[name=upload]”).value==null){
+		$(“input[name=upload]”).attr(‘value’,<%=p.getPetImg()%>);
+	}
+}
 
 var today = new Date();
 var dd = today.getDate();

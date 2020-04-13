@@ -17,7 +17,9 @@ public class PetService {
 	
 	public int petprofileinsert(Pet pet, String id) {
 		Connection conn = getConnection();
-		int result = dao.petprofileinsert(conn,pet, id);
+		System.out.println("받아온 정보"+pet+"아이디"+id);
+		int result = dao.petprofileinsert(conn,pet,id);
+		
 		
 		if(result>0) commit(conn);
 		else rollback(conn);
@@ -34,6 +36,33 @@ public class PetService {
 		
 		close(conn);
 		return list;
+		
+	}
+	
+	public Pet petProfileDetail(String id, int no) {
+		
+		Connection conn = getConnection();
+		Pet p = dao.petProfileDetail(conn, id, no);
+		System.out.println("받아온 세부 정보 "+p);
+
+		close(conn);
+		return p;
+		
+	}
+	
+	public int petprofileeidt(Pet pet,String id, int no) {
+		
+		Connection conn = getConnection();
+		System.out.println("수정할 정보"+pet+"아이디"+id+"번호"+no);
+		int result = dao.petprofileeidt(conn,pet,id,no);
+		
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		System.out.println("새로운 수정할 정보"+result);
+		return result;
 		
 	}
 

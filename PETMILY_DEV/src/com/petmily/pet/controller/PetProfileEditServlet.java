@@ -1,14 +1,13 @@
 package com.petmily.pet.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -16,16 +15,16 @@ import com.petmily.pet.model.vo.Pet;
 import com.petmily.pet.service.PetService;
 
 /**
- * Servlet implementation class PetProfileServlet
+ * Servlet implementation class PetProfileEditServlet
  */
-@WebServlet("/user/petprofile/uploadEnd")
-public class PetProfileUploadServlet extends HttpServlet {
+@WebServlet("/user/petprofile/edit")
+public class PetProfileEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PetProfileUploadServlet() {
+    public PetProfileEditServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,16 +35,24 @@ public class PetProfileUploadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		if(!ServletFileUpload.isMultipartContent(request)) {
+			request.setAttribute("msg", "오류![form:encType]");
+			request.setAttribute("loc","/user/petprofile");
+			request.getRequestDispatcher("/views/common/msg.jsp")
+			.forward(request,response);
+			return;
+		}
 		
 		String id = (String)request.getAttribute("userId");
 		id = "sebin";
+		
 		
 		String path = getServletContext().getRealPath("/upload/pet/");
 		int maxSize=1024*1024*10;
 		
 		MultipartRequest mr = new MultipartRequest(request,path,maxSize,"UTF-8",new DefaultFileRenamePolicy());
 		
-		String userId = mr.getParameter("userId");
+		int no = Integer.parseInt(mr.getParameter("no"));
 		String petName = mr.getParameter("pname");
 		String petGender = mr.getParameter("gender");
 		String petKind = mr.getParameter("ptype");
@@ -98,23 +105,58 @@ public class PetProfileUploadServlet extends HttpServlet {
 		
 		
 		
-		Pet pet = new Pet(0,userId,petName,petGender,petKind,petWeight,petAge,
-				petAffinity, petNeutralization,petDisease,petDiseaseTxt,petSeparation,
-				petSeparationTxt,petUrine,petUrineTxt, petIndoor,petIndoorTxt,
-				petHowling,petHowlingTxt,heartDisease,vaccine,corona,kennel,
-				hospitalName,hospitalPhone,hospitalZip,hospitalAddress
-				,detail,petImg,registration);
+//		Pet pet = new Pet(no,id,petName,petGender,petKind,petWeight,petAge,
+//				petAffinity, petNeutralization,petDisease,petDiseaseTxt,petSeparation,
+//				petSeparationTxt,petUrine,petUrineTxt, petIndoor,petIndoorTxt,
+//				petHowling,petHowlingTxt,heartDisease,vaccine,corona,kennel,
+//				hospitalName,hospitalPhone,hospitalZip,hospitalAddress
+//				,petImg,registration,detail);
+		
+		Pet pet = new Pet();
+			
+			
+				pet.setCorona(corona);
+				pet.setDetail(detail);
+				pet.setHeartDisease(heartDisease);
+				pet.setHospitalAddress(hospitalAddress);
+				pet.setHospitalName(hospitalName);
+				pet.setHospitalPhone(hospitalPhone);
+				pet.setHospitalZip(hospitalZip);
+				pet.setKennel(kennel);
+				pet.setPetAffinity(petAffinity);
+				pet.setPetAge(petAge);
+				pet.setPetCode(no);
+				pet.setPetDisease(petDiseaseTxt);
+				pet.setPetDiseaseTxt(petDiseaseTxt);
+				pet.setPetGender(petGender);
+				pet.setPetHowling(petHowling);
+				pet.setPetHowlingTxt(petHowlingTxt);
+				pet.setPetImg(petImg);
+				pet.setPetIndoor(petIndoor);
+				pet.setPetIndoorTxt(petIndoorTxt);
+				pet.setPetKind(petKind);
+				pet.setPetName(petName);
+				pet.setPetNeutralization(petNeutralization);
+				pet.setPetSeparation(petSeparation);
+				pet.setPetSeparationTxt(petSeparationTxt);
+				pet.setPetUrine(petUrine);
+				pet.setPetUrineTxt(petUrineTxt);
+				pet.setPetWeight(petWeight);
+				pet.setRegistration(registration);
+				pet.setUserId(id);
+				pet.setVaccine(vaccine);
 		
 		
-		int result = new PetService().petprofileinsert(pet,id);
+		
+		int result = new PetService().petprofileeidt(pet,id,no);
 		
 		String msg = "";
 		String loc = "";
 		if(result>0) {
-			msg = "펫프로필 등록 성공";
+			msg = "펫프로필 수정 성공";
 			loc="/user/petprofile";
 		}else {
-			msg = "펫프로필 등록 실패";
+			msg = "펫프로필 수정 실패";
 			loc="/user/petprofile";
 		}
 		
