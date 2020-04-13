@@ -9,9 +9,8 @@
 	<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.min.js"></script>
 	<!-- Daum 우편번호 서비스 API  -->
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- 폰트 -->
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
-
 
 
 <!-- 회원가입 영역 -->
@@ -280,37 +279,68 @@
 
 </section>
 
-<%@include file="/views/common/footer.jsp" %>  
-
-<%--<script>
+<script>
 
 /* --------------------------------------------------------------------------------------- */
-	 var userId = $("#user_id").val();
+	var userId = $("#user_id").val();
 	var password = $("#password").val();
 	var pwck = $("#pwck").val();
 	var email= $("#email").val();
 	var userName = $("#user_name").val();
 	var birth = $("#user_birth_day").val();
-	var expiration = $("#expiration").val();
+	var certificateYN = $("#certificate").val(); //자격증 보유 여부
+	var certiName=$("#certiName").val(); //자격증 이름
+	var certiAgency=$("#certiAgency").val(); //자격증 발급 기관
+	var certiday=$("#certiday").val(); //자격증 취득 일시
+	var expiration = $("#expiration").val(); //자격증 만료 기간
+	var liupload = $("#liupload").val(); //자격증 이미지
 	console.log(birth);
 	
+	
+	//자격증 유무에 따른 입력부분 활성 비활성
 	$(document).ready(function(){
+		$("input:radio[name=certificate]").click(function(){
+			if($("input:radio[name=certificate]:checked").val()=='Y'){
+				//자격증 유무 : 있음에 체크가 되어있다면
+				$("input[name=certiName]").attr('disabled',false);
+				$("input[name=certiAgency]").attr('disabled',false);
+				$("input[name=certiday]").attr('disabled',false);
+				$("input[name=expiration]").attr('disabled',false); 
+				$("input[name=expireday]").attr('disabled',false);
+				$("input[name=liupload]").attr('disabled',false);
+				//활성화
+			}else if($("input:radio[name=certificate]:checked").val()=='N'){
+				//자격증 유무 : 없음에 체크가 되어있다면
+				$("input[name=certiName]").attr('disabled',true);
+				$("input[name=certiAgency]").attr('disabled',true);
+				$("input[name=certiday]").attr('disabled',true);
+				$("input[name=expiration]").attr('disabled',true); 
+				$("input[name=expireday]").attr('disabled',true);
+				$("input[name=liupload]").attr('disabled',true);
+				//비활성화
+			}
+		});
+	});
+	
+	//만료일시 유무에 따른 날짜 선택 활성 비활성 함수
+	 $(document).ready(function(){
 		$("input:radio[name=expiration]").click(function(){
 	        if($("input:radio[name=expiration]:checked").val() == 'Y'){
-	   
-	        	$("input[name=certiday]").attr('disabled',false);
+	        	//만료일시 : 있음에  체크가 되었다면
+	        	$("input[name=expireday]").attr('disabled',false);
 	            // radio 버튼의 value 값이 1이라면 활성화
 	 	
 	        }else if($("input:radio[name=expiration]:checked").val() == 'N'){
-	        	$("input[name=certiday]").attr('disabled',true);
+	        	$("input[name=expireday]").attr('disabled',true);
 	            // radio 버튼의 value 값이 0이라면 비활성화
 	        }
 	    });
-	});
+	}); 
+	
 	
 
 // 이 함수에서는 각각의 input값을 확인하는 '함수'를 호출하는 함수
-	function all_join_check() {
+	/* function all_join_check() {
 		
 		if(!checkUserId(form.user_id.value)) {
 			return false;
@@ -334,7 +364,7 @@
 	        return false;
 	    }
 	    return true;
-	}
+	} */
 	
 	// 공백확인 함수
 	function checkExistData(value, dataName) {
@@ -485,55 +515,57 @@
 	
 	
 	/* Daum 우편번호 로직 */
-	function zip_code() {
-		new daum.Postcode({
-			oncomplete: function(data) {
-				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	function zip_code(){
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-	            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	            var addr = ''; // 주소 변수
-	            var extraAddr ='';//
-	          
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr ='';//
+          
 
-	            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                addr = data.roadAddress;
-	            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                addr = data.jibunAddress;
-	            }
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
 
-	            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	            if(data.userSelectedType === 'R'){
-	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                    extraAddr += data.bname;
-	                }
-	                // 건물명이 있고, 공동주택일 경우 추가한다.
-	                if(data.buildingName !== '' && data.apartment === 'Y'){
-	                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                }
-	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                if(extraAddr !== ''){
-	                    extraAddr = ' (' + extraAddr + ')';
-	                }
-	                
-	                // 조합된 참고항목을 해당 필드에 넣는다.
-	                document.getElementById("detail").value = extraAddr;
-	            
-	            } else {
-	                document.getElementById("detail").value = '';
-	            }
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                document.getElementById("addressInput").value = extraAddr;
+            
+            } else {
+                document.getElementById("addressInput").value = '';
+            }
 
-	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	            document.getElementById('postNum').value = data.zonecode;
-	            document.getElementById("address").value = addr;
-	            // 커서를 상세주소 필드로 이동한다.
-	            document.getElementById("detail").focus();
-	        }
-	    }).open();
-	} // function()
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postNum').value = data.zonecode;
+            document.getElementById("streetAddress").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("addressInput").focus();
+        }
+    }).open();	
+}
+	
+	
+	
 </script>
 
- --%>
