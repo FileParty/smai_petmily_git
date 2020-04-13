@@ -32,11 +32,8 @@
 
 
 %>
-      
 <%@ include file="/views/common/header.jsp"%>
-
     <section>
-    
     <div class="row no-gutters" id="main_img">
 
             <div class="col-lg-8" style="height: 100%;">

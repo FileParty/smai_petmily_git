@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.petmily.admin.model.vo.ApplyUserData,com.petmily.admin.model.vo.User" %>
+<%@ page import="java.util.ArrayList, com.petmily.admin.model.vo.ApplyUserData,com.petmily.admin.model.vo.User,com.petmily.admin.model.vo.AdminPetsitter" %>
 <% 
 	ApplyUserData aud = null;
 	User u = null;
+	ArrayList<AdminPetsitter> apList = new ArrayList<AdminPetsitter>();
 	if(request.getAttribute("showType")!=null&&request.getAttribute("userData")!=null&&((String)request.getAttribute("showType")).equals("apply")){
 		aud = (ApplyUserData)request.getAttribute("userData");
 	} else if(request.getAttribute("showType")!=null&&request.getAttribute("userData")!=null&&((String)request.getAttribute("showType")).equals("user")){
 		u = (User)request.getAttribute("userData");
+	} else if(request.getAttribute("showType")!=null&&request.getAttribute("userData")!=null&&((String)request.getAttribute("showType")).equals("petsitterCer")){
+		apList = (ArrayList<AdminPetsitter>)request.getAttribute("userData");
 	}
 
 %>
@@ -95,8 +98,46 @@
 						<% } %>
 					</td>
 				</tr>
-			<% } %>
-		<% } else if(u!=null) { %>
+			<% }
+			}%>
+			<% if(apList.size()>0){
+				for(AdminPetsitter ap : apList){ %>
+				<tr>
+					<th>자격증이름</th>
+					<td><%=ap.getCERTIFICATE_NAME()%></td>
+				</tr>
+				<tr>
+					<th>자격증기관명</th>
+					<td><%=ap.getCERTIFICATION_NAME()%></td>
+				</tr>
+				<tr>
+					<th>자격증 발급일</th>
+					<td>
+					<% if(ap.getDATE_OF_ACQUISITION()!=null){ %>
+						<%=ap.getDATE_OF_ACQUISITION().substring(0, 11)%>
+					<% } else { %>
+						<p>발급일이 없습니다</p>
+					<% } %>
+					</td>
+				</tr>
+				<tr>
+					<th>자격증 만료일</th>
+					<td><%=ap.getEXPIRATION_DATE()!=null?ap.getEXPIRATION_DATE():"만료일자없음"%></td>
+				</tr>
+				<tr>
+					<th>자격증 사진</th>
+					<td>
+						<%if(ap.getCERTIFICATE_FILENAME()!=null){ %>
+							<img alt="" src="<%=request.getContextPath()%>/upload/sitter/<%=ap.getCERTIFICATE_FILENAME()%>"
+								widht="200px" height="120px">
+						<% } else { %>
+							<p>사진이 없습니다.</p>
+						<% } %>
+					</td>
+				</tr>
+			<% }
+			}%>
+		<% if(u!=null) { %>
 			<tr>
 				<th>아이디</th>
 				<td><%=u.getUserId()%></td>

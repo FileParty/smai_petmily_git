@@ -25,8 +25,16 @@
 			<% } else { %>
 				<a href="<%=request.getContextPath()%>/admin/apply">- 펫 시터 지원 목록</a>
 			<% } %>
-			<a href="#">- 이전 펫 시터 지원 목록</a>
-			<a href="#">- 펫 시터 목록</a>
+			<% if(pageType==3){ %>
+				<a href="<%=request.getContextPath()%>/admin/cancel">▷  이전 펫 시터 지원 목록</a>
+			<% } else { %>
+				<a href="<%=request.getContextPath()%>/admin/cancel">-  이전 펫 시터 지원 목록</a>
+			<% } %>
+			<% if(pageType==4){ %>
+				<a href="<%=request.getContextPath()%>/admin/petsitterList">▷   펫 시터 목록</a>
+			<% } else { %>
+				<a href="<%=request.getContextPath()%>/admin/petsitterList">-  펫 시터 목록</a>
+			<% } %>
 		</div>
 		<div id="sideBar3" class="side">
 			<h2>게시글</h2>

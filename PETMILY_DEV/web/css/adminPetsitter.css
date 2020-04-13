@@ -26,11 +26,14 @@ div#adminUserListSearchType{
 p#type-date{
 	margin-right:45px;
 }
+p#type-star{
+	margin-right:45px;
+}
 p#type-point{
 	margin-right:45px;
 }
 
-p#type-date:hover, p#type-point:hover, p#type-name:hover{
+p#type-date:hover, p#type-star:hover, p#type-name:hover{
 	cursor:pointer;
 }
 
@@ -74,6 +77,10 @@ div.adminUserInfo th:nth-of-type(7){
 div.adminUserInfo tbody>tr{
 	border-bottom:1px solid black;
 	height:45px;
+}
+div.adminUserInfo td>p{
+	margin:0px;
+	padding:0px;
 }
 
 button.Abtns{
