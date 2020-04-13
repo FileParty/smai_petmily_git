@@ -39,4 +39,17 @@ public class ReservationService {
 		  return result;
 	  }
 	  
+	  public List<PetReservation> reservation(String id) {
+		  Connection conn = getConnection();
+		  List<PetReservation> list = dao.reservation(conn,id);
+		  for(int i=0;i<list.size();i++) {
+			  list.set(i,dao.reservations(conn, id,list.get(i)));
+		  }
+		  System.out.println("플러스"+list);
+		  
+		  close(conn);
+		 
+		  return list;
+	  }
+	  
 }

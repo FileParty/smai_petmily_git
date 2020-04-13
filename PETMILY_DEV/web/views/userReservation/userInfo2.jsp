@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 
-
+<%@ include file="/views/common/header.jsp" %>
 
 
 <style>
@@ -270,7 +270,7 @@ label.custom-file-label::after{
                             <li class="title">예약</li>
                             <hr class="hr-line"/>
                             <li class="content"><a href="<%=request.getContextPath()%>/user/request"> - 요청한 예약</a></li>
-                            <li class="content"><a href=""> - 진행중인 예약</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/user/reservationing"> - 진행중인 예약</a></li>
                             <li class="content"><a href=""> - 종료된 예약</a></li>
                             <li class="content"><a href=""> - 채팅</a></li>
                             <br/>
@@ -358,9 +358,9 @@ label.custom-file-label::after{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
 </body>
 
-<script>
+<%@ include file="/views/common/footer.jsp" %>
 
 
-</script>

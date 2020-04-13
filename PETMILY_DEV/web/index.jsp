@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ include file="views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/index.css" type = "text/css">
+
 <style>
 	div#mainText{
 		width:1366px;
@@ -102,7 +103,9 @@
 	<button id="serviceCenter" 
 		onclick="location.replace('<%=request.getContextPath()%>')">고객센터에 문의</button>
 </section>
-<script>
+
+	<script>
+
 	$(function(){
 		$(".que>img").click((e)=>{
 			if($(e.target).attr("alt")=="1"){
@@ -132,4 +135,5 @@
 		})
 	})
 </script>
+<%@ include file="views/common/footer.jsp" %>
 

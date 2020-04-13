@@ -14,6 +14,8 @@ import java.util.Properties;
 
 import com.petmily.board.model.dao.BoardDao;
 import com.petmily.reservation.model.vo.PetReservation;
+
+import oracle.jdbc.proxy.annotation.Pre;
 public class ReservationDao {
 	
 	private Properties prop = new Properties();
@@ -67,8 +69,6 @@ public class ReservationDao {
 	public PetReservation requestRevs(Connection conn,String id,PetReservation p) {
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
-		
-		
 		String sql = prop.getProperty("requestRevs");
 		
 		try {
@@ -112,6 +112,62 @@ public class ReservationDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public List<PetReservation> reservation(Connection conn,String id) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PetReservation pr = null;
+		List<PetReservation> list = new ArrayList();
+		String sql = prop.getProperty("reservation");
+		try { 
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				pr = new PetReservation();
+				pr.setPetImg(rs.getString("PET_IMG_FILENAME"));
+				pr.setPetCode(rs.getInt("PET_CODE"));
+				pr.setBoardNo(rs.getInt("BOARD_CODE"));
+				pr.setPetName(rs.getString("PET_NAME"));
+				pr.setCheckIn(rs.getString("CHECKIN_DATE"));
+				pr.setCheckOut(rs.getString("CHECKOUT_DATE"));
+				list.add(pr);
+			}
+			System.out.println("DAO"+list);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public PetReservation reservations(Connection conn,String id,PetReservation p) {
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		List<String> list = new ArrayList<String>();
+		String sql = prop.getProperty("reservations");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, p.getBoardNo());
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				p.setBoardTitle(rs.getString("BOARD_TITLE"));
+				list.add(rs.getString("PLUS_SERVICE_VALUES"));
+				p.setPlusType(list);
+			}
+			System.out.println(p);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return p;
 	}
 	
 	

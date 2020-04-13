@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
     
 <%@ page import="java.util.List,com.petmily.reservation.model.vo.PetReservation" %>
+<%@ include file="/views/common/header.jsp" %>
 <%
-	List<PetReservation> list = (List)request.getAttribute("list");
-	int count = 1;
-%>    
-    
+List<PetReservation> list = (List)request.getAttribute("list");
+ 	
+%>
+
 
 <style>
    *{   
@@ -135,8 +136,8 @@
                             
                             <li class="title">예약</li>
                             <hr class="hr-line"/>
-                            <li class="content"><a href=""> - 요청한 예약</a></li>
-                            <li class="content"><a href=""> - 진행중인 예약</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/user/request"> - 요청한 예약</a></li>
+                            <li class="content"><a href="<%=request.getContextPath()%>/user/reservationing">"> - 진행중인 예약</a></li>
                             <li class="content"><a href=""> - 종료된 예약</a></li>
                             <li class="content"><a href=""> - 채팅</a></li>
                             <br/>
@@ -162,43 +163,80 @@
                   
                    
                    <!-- 콘텐츠 영역 -->
-                  <table border=1>
-                  	<tr style="width:500px;">
-                  		<td rowspan="2">1</td>
-                  		<td colspan="3">2</td>
-                  		
-                  	</tr>
-                  	<tr>
-                  		<td colspan="3">1</td>
-                  		
-                  		
-                  	</tr>
-                  	<tr>
-                  		<td>1</td>
-                  		<td >8</td>
-                  		<td>9</td>
-                  	</tr>
-                  </table>
+                   <% for(PetReservation p : list) { %>
+                <table border="1">
+				<tr >
+					<td style="width300px; height:200px;" rowspan="2" colspan="2">
+						<div style="width: 200px;">
+							<img src="<%=request.getContextPath()%>/views/img/<%=p.getPetImg()%>">
+						</div>
+					</td>
+					<td style="height: 10px;"colspan="3">
+						<p style="display: inline-block;"><%=p.getBoardTitle() %></p>
+		
+						<input style="margin-left:80px;" type="button" value="추가 요금 결제">
+					</td>
+		
+				</tr>
+				<tr style="width: 200px;">
+					<td colspan="3">
+						<div style="width: 500px;">
+							<div class="row">
+								<p>'<%=p.getPetName() %>'를 맡겼습니다.</p>
+								
+								<input style="width:90px;height:20px;"type="text" value="<%=p.getCheckIn().substring(0,11)%>">
+								<input style="width:90px;height:20px;"type="text" value="<%=p.getCheckOut().substring(0,11)%>">
+								<%if(p.getPlusType().contains("목욕가능")==true) { %>
+								<input type="checkbox" value="목욕가능" checked disabled>목욕
+								<%} else { %>
+								<input type="checkbox" value="">목욕
+								<%} %>
+								<%if(p.getPlusType().contains("집앞픽업")==true) { %>
+								<input type="checkbox" checked disabled>픽업
+								<%} else { %>
+								<input type="checkbox">픽업
+								<%} %>
+								<%if(p.getPlusType().contains("약물복용")==true) { %>
+								<input type="checkbox" value="약물복용" checked disabled>약물복용
+								<%} else { %>
+								<input type="checkbox">약물복용
+								<%} %>
+								<%if(p.getPlusType().contains("노견케어")==true) { %>
+								<input type="checkbox" checked disabled>노견케어
+								<%} else { %>
+								<input type="checkbox">노견케어
+								<%} %>
+								<%if(p.getPlusType().contains("추가할인")==true) { %>
+								<input type="checkbox" checked disabled>추가할인
+								<%} else { %>
+								<input type="checkbox">추가할인
+								<%} %>
+								
+								
+								<textarea cols="20" rows="2">안녕하세요</textarea>
+								<input style="margin-left:350px;margin-top:50px;height:30px;"type="button" value="상세 요청 확인">
+							</div>
+						</div>
+					</td>
+		
+				</tr>
+				<tr>
+					<td colspan="5">
+						<input style="margin-left:500px;"type="button" value="펫 시팅 종료">
+						</td>
+		
+				</tr>
+				</table>
+				<%} %>
                     </div>
                 </div>
             </div>
         
-        </div>
+        
     </section>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </body>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-
-
-    
-
-
-</script>
 </html>
