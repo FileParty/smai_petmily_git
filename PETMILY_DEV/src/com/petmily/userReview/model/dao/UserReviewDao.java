@@ -57,7 +57,7 @@ public class UserReviewDao {
 				ur.setReviewStar(rs.getInt("review_Star"));
 				ur.setReviewDate(rs.getDate("review_date"));
 				ur.setReviewType(rs.getString("review_type"));
-				ur.setReviewText(rs.getString("review_blind_text"));
+				ur.setReviewBlindText(rs.getString("review_blind_text"));
 				
 				list.add(ur);
 				

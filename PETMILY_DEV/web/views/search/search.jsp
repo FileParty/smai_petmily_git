@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%>
 <% 
 	List<PetsitterSearch> list=(List)request.getAttribute("list");
 %>
-
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/mhindex.css">
 <%@ include file="/views/common/header.jsp" %>
 
 
@@ -142,7 +142,7 @@ pageEncoding="UTF-8"%>
                   <button class="btn btn-outline-secondary rounded-pill" >프로 펫 시터</button>
                   <%} %>
                   <span class="ml-2"><%= ps.getBoardAddress() %></span>
-                  <button class="ml-auto"><i class="far fa-heart"></i></button>
+                  <button class="ml-auto" click="heart();"><i class="far fa-heart"></i></button>
                 </div>
                 <div class="mt-3">
                   <p class="h6"><%=ps.getBoardTitle() %></p>
@@ -270,7 +270,16 @@ pageEncoding="UTF-8"%>
   		});
   	});
   	
-  	
+  	$(function(){
+  		
+  		$.ajax({
+  			
+  			
+  			
+  		});
+  	});
+  		
+  		
   	
   </script>
 
