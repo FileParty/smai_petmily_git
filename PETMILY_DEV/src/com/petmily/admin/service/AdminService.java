@@ -113,4 +113,11 @@ public class AdminService {
 		return count;
 	}
 
+	public ArrayList<AdminPetsitter> petsitterCer(String userId) {
+		Connection conn = getConnection();
+		ArrayList<AdminPetsitter> list = dao.petsitterCer(conn, userId);
+		close(conn);
+		return list;
+	}
+
 }

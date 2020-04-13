@@ -394,6 +394,34 @@ public class AdminDao {
 		
 		return count;
 	}
+
+	public ArrayList<AdminPetsitter> petsitterCer(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<AdminPetsitter> list = new ArrayList<AdminPetsitter>();
+		String sql = prop.getProperty("petsitterCer");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				AdminPetsitter u = new AdminPetsitter();
+				u.setCERTIFICATE_NAME(rs.getString("CERTIFICATE_NAME"));
+				u.setCERTIFICATION_NAME(rs.getString("CERTIFICATION_NAME"));
+				u.setDATE_OF_ACQUISITION(rs.getString("DATE_OF_ACQUISITION"));
+				u.setEXPIRATION_DATE(rs.getString("EXPIRATION_DATE"));
+				u.setCERTIFICATE_FILENAME(rs.getString("CERTIFICATE_FILENAME"));
+				list.add(u);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+	}
 	
 
 
