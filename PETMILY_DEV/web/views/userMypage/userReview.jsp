@@ -168,19 +168,19 @@ pageEncoding="UTF-8"%>
                    <table id="enrollTB">
 
                     <tr class="tr-blank">
-                        <th>No</th>
-            			<th>별점</th>
-            			<th>내용</th>
-            			<th>펫시터 이름</th>
-                        <th>체크 인</th>
-                        <th>체크 아웃</th>
+                        <th class="no">No</th>
+            			<th class="star">별점</th>
+            			<th class="reviewText">내용</th>
+            			<th class="name">펫시터 이름</th>
+                        <th class="ckDate">체크 인</th>
+                        <th class="ckDate">체크 아웃</th>
                         <th>작성 후기</th>
                     </tr>
                     <% if(list!=null) {%>
                     <%for(UserReview ur:list) {%>
                     <tr>
 						<td><%=count++%></td>
-						<td><%=ur.getReviewStar() %></td>
+						<td class="starR on"><%for(int i=0;i<ur.getReviewStar();i++){%><i class="far fa-star"></i><%}%></td>
 						<td><%=ur.getReviewText() %></td>
 						<td><%=ur.getPetsitterName() %></td>
 						<td><%=ur.getCheckIn() %></td>
@@ -198,7 +198,22 @@ pageEncoding="UTF-8"%>
         </div>
     </section>
 
-	
+<style>
+	.no{
+		width:40px;
+	}
+	.star{
+		width:150px;
+	}
+	.reviewText{
+		width: 250px;
+	}
+	.name{
+		width:100px;
+	}
+
+
+</style>	
 
 
 
