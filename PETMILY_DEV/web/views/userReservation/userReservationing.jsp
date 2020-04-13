@@ -168,26 +168,33 @@ List<PetReservation> list = (List)request.getAttribute("list");
 				<tr >
 					<td style="width300px; height:200px;" rowspan="2" colspan="2">
 						<div style="width: 200px;">
-							<img src="<%=request.getContextPath()%>/views/img/<%=p.getPetImg()%>">
+							<%-- <img src="<%=request.getContextPath()%>/views/img/<%=p.getPetImg()%>"> --%>
+							<img style="border:1px solid;width:200px;height:150px;"src="<%=request.getContextPath()%>/upload/board/매일산책.png">
 						</div>
 					</td>
 					<td style="height: 10px;"colspan="3">
-						<p style="display: inline-block;"><%=p.getBoardTitle() %></p>
+						<input class="form-control form-control-sm" type="text" style="text-align:center;display:inline;" value="<%=p.getBoardTitle()%>">
 		
-						<input style="margin-left:80px;" type="button" value="추가 요금 결제">
+						<input class="btn-danger" style="color:yellow;border-radius:15px;font-size:13px;margin-left:500px;" type="button" value="추가 요금 결제">
 					</td>
 		
 				</tr>
 				<tr style="width: 200px;">
 					<td colspan="3">
-						<div style="width: 500px;">
-							<div class="row">
-								<p>'<%=p.getPetName() %>'를 맡겼습니다.</p>
-								
-								<input style="width:90px;height:20px;"type="text" value="<%=p.getCheckIn().substring(0,11)%>">
-								<input style="width:90px;height:20px;"type="text" value="<%=p.getCheckOut().substring(0,11)%>">
+						<div class="row">
+							<div class="col-lg-6">
+								<input class="form-control form-control-sm" type="text" value="'<%=p.getPetName() %>'를 맡겼습니다."></p>
+								<p style="margin:0px;font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;체크 인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 체크아웃</p>
+								<input class="form-control form-control-sm" style="width:90px;height:20px;display:inline;"type="text" value="<%=p.getCheckIn().substring(0,11)%>">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input class="form-control form-control-sm" style="width:90px;height:20px;display:inline;"type="text" value="<%=p.getCheckOut().substring(0,11)%>">
+								<br>
+								<textarea class="form-control" cols="20" rows="2">안녕하세요</textarea>
+							</div>
+							<div class="col-lg-6 align-self-end">
 								<%if(p.getPlusType().contains("목욕가능")==true) { %>
-								<input type="checkbox" value="목욕가능" checked disabled>목욕
+								<input style="margin:0px;"type="checkbox" value="목욕가능" checked disabled>목욕
 								<%} else { %>
 								<input type="checkbox" value="">목욕
 								<%} %>
@@ -197,7 +204,7 @@ List<PetReservation> list = (List)request.getAttribute("list");
 								<input type="checkbox">픽업
 								<%} %>
 								<%if(p.getPlusType().contains("약물복용")==true) { %>
-								<input type="checkbox" value="약물복용" checked disabled>약물복용
+								<input type="checkbox" value="약물복용" checked disabled>약물복용<br>
 								<%} else { %>
 								<input type="checkbox">약물복용
 								<%} %>
@@ -207,22 +214,20 @@ List<PetReservation> list = (List)request.getAttribute("list");
 								<input type="checkbox">노견케어
 								<%} %>
 								<%if(p.getPlusType().contains("추가할인")==true) { %>
-								<input type="checkbox" checked disabled>추가할인
+								<input style="margin:0px;"type="checkbox" checked disabled>추가할인
 								<%} else { %>
-								<input type="checkbox">추가할인
+								<input style="margin:0px;"type="checkbox">추가할인
 								<%} %>
-								
-								
-								<textarea cols="20" rows="2">안녕하세요</textarea>
-								<input style="margin-left:350px;margin-top:50px;height:30px;"type="button" value="상세 요청 확인">
+								<input class="btn-light" style="font-size:13px;border-radius:20px;margin-left:120px;margin-top:30px;height:30px;"type="button" value="상세 요청 확인">
+								</div>
 							</div>
-						</div>
+					
 					</td>
 		
 				</tr>
 				<tr>
 					<td colspan="5">
-						<input style="margin-left:500px;"type="button" value="펫 시팅 종료">
+						<input class="btn-warning" style="font-size:13px;border-radius:20px;margin-left:670px;"type="button" value="펫 시팅 종료">
 						</td>
 		
 				</tr>

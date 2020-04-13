@@ -30,8 +30,9 @@ public class SitterUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
+		String id2 = "petsitter4";
 		System.out.println(id);
-		PetSitterBoard pb = new BoardService().boardDetail(id);
+		PetSitterBoard pb = new BoardService().boardDetail(id2);
 		request.setAttribute("pb", pb);
 		request.getRequestDispatcher("/views/board/boardUpdate.jsp").forward(request, response);
 	}
