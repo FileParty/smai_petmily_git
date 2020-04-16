@@ -77,7 +77,7 @@
                     <td class="info">거주지 주소</td>
                     <td class="info">
                         <input class="applyInfoWidth" type="text" class="infoInput" name="address"
-                        value="<%=pss.getPostCode()%>" readonly>
+                        value="<%=pss.getSitterAddress()%> <%=pss.getAddressDetail()%>" readonly>
                     </td>
                 </tr>
             </table>
@@ -98,7 +98,7 @@
 				<tr>
 					<td><label><input class="checkcheck" type="checkbox" name="houseType" id="houseType" value="오피스텔" width="50px" height="50px"/>오피스텔</label></td>
 					<td><label><input type="checkbox" name="houseType" id="houseType" value="마당보유" width="50px" height="50px"/>마당보유</label></td>
-					<td colspan="2"><label><input type="checkbox" name="houseType"  id="houseType" value="주변 산책로 보유" width="50px" height="50px"/>주변 산책로 보유</label></td>
+					<td colspan="2"><label><input type="checkbox" name="houseType"  id="houseType" value="주변산책로보유" width="50px" height="50px"/>주변 산책로 보유</label></td>
 				</tr>
 			</table>
              
@@ -109,10 +109,10 @@
 	    		<tr>
 	    			<td>
 						<label>
-							<input class="checkcheck" type="radio" name="certificateCheck" id="certificateCheck" value="네" style="margin-left:30px;"/>네
+							<input class="checkcheck" type="radio" name="certificateCheck" id="certificateCheck" value="네" style="margin-left:30px;" <%=pss.getCertificateYN().equals("Y")?"checked":"" %> onclick="return(false);"/>네
 						</label>
 						<label id="certiLabel">
-							<input type="radio" name="certificateCheck" id="certificateCheck" value="아니오" required/>아니오
+							<input type="radio" name="certificateCheck" id="certificateCheck" value="아니오" <%=pss.getCertificateYN().equals("N")?"checked":""%> onclick="return(false);"/>아니오
 						</label>
 	    			</td>
 	    		</tr>
@@ -187,6 +187,8 @@
 		
 		var agreedisagree=$("#agreedisagree").val();//개인정보 동의 여부
 		
+		
+		//개인정보 동의 여부
 		$(document).ready(function(){
 			$("input:radio[name=agreedisagree]").click(function(){
 				if($("input:radio[name=agreedisagree]:checked").val()=='N'){
@@ -197,6 +199,8 @@
 				return true;
 			});
 		});
+	
+		
 		
 	
 	</script>
